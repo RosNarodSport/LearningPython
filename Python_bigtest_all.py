@@ -24,7 +24,7 @@ window.show()
 def on_click_setBack():
     form.label_main_pushButton.setText("Текст")
     form.label_for_horizontalSlider_size.setText('1')
-    form.horizontalSlider_size.setProperty("value", 1)
+    form.horizontalSlider_size.setProperty("value", 12)
 
     form.label_main_pushButton.setFont(QFont('Arial', 12))
     form.label_hieroglyph.setFont(QFont('Arial', 12))
@@ -33,6 +33,8 @@ def on_click_setBack():
     form.progressBar.setProperty("value", 1)
     form.spinBox.setProperty("value", 1)
     form.dateEdit.setDateTime(QtCore.QDateTime(QDate.currentDate()))
+    form.label_for_horizontalSlider_speed.setText('Задержка показа: 2.5 сек.')
+    form.horizontalSlider_speed.setProperty("value", 2500)
 
 
 def on_click():
@@ -46,7 +48,7 @@ def on_click_replace():
 def horizontalSlider_size_Value():
     form.progressBar.setValue(form.horizontalSlider_size.value())
     zzz = form.horizontalSlider_size.value()
-    form.label_for_horizontalSlider_size.setText(str(zzz))
+    form.label_for_horizontalSlider_size.setText(f'Размер иероглифа: {str(zzz)}')
     yyy = form.progressBar.value()
     form.label_for_progressBar.setText(str(yyy))
 
@@ -93,8 +95,11 @@ full_list_of_hieroglyphs = [
 
 # Метод управляет изменением скорости показа иероглифа
 def increase_speed_show():
-    speed = 1000*1
-    return speed
+    speed_value = form.horizontalSlider_speed.value()
+    speed_value = int(speed_value)
+    print('Это speed_value', speed_value)
+    form.label_for_horizontalSlider_speed.setText(f'Задержка показа: {round(speed_value/1000, 2)} сек.')
+    return speed_value
 
 
 def show_me_hieroglyphs():
