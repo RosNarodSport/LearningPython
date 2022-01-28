@@ -75,29 +75,43 @@ full_list_of_hieroglyphs = [
 ]
 
 
+def show_me_hieroglyphs():
+    for i in range(0, len(full_list_of_hieroglyphs)):
+        one_dictionary_entry = full_list_of_hieroglyphs[i]
+        QtCore.QTimer.singleShot(2000 * i, partial(update, one_dictionary_entry, i))
+
+
+def update(one_dictionary_entry, i):
+    y = 0
+    while y < len(one_dictionary_entry):
+        form.label_in_groupBox1.setText(str(one_dictionary_entry[3])) # Выдает по одному элементу
+        print(one_dictionary_entry[y])
+        y += 1
+
+print('Что тут?')
+# show_me_hieroglyphs()
+
+# update(full_list_of_hieroglyphs, 0)
+
+def vertical_print_one_complect_of_hieroglyph(complect_of_hieroglyph):
+    delimiter = ""
+    for x in complect_of_hieroglyph:
+        for y in x:
+            y = str(y)
+            # print(delimiter.join(y))
+
 def hieroglyphs():
     form.label_in_groupBox1.setText('我是')
 
-def show_me_hieroglyphs():
-    for i in range(0, len(full_list_of_hieroglyphs)):
-            QtCore.QTimer.singleShot(2000*i, partial(update, full_list_of_hieroglyphs, i))
 
-def update(sss, i):
-    ddd = full_list_of_hieroglyphs[i]
-    print(*ddd, sep='\n')
-    # form.label_in_groupBox1.setText(str(ddd))
-    for i in full_list_of_hieroglyphs:
-        form.label_in_groupBox1.setText(" \n".join(str(ddd))) # не совсем то! Мне надо выводить по инндексу
-
-# show_me_hieroglyphs()
-
+vertical_print_one_complect_of_hieroglyph(full_list_of_hieroglyphs)
 form.main_pushButton.clicked.connect(on_click)
-# form.pushButton_replace.clicked.connect(hieroglyphs)
-form.pushButton_replace.clicked.connect(show_me_hieroglyphs)
-
 form.pushButton_setBack.clicked.connect(on_click_setBack)
 form.horizontalSlider1.valueChanged.connect(horizontalSlider1_sliderValue)
 form.spinBox.valueChanged.connect(spinBox_detail)
 form.dateEdit.dateTimeChanged.connect(dateEdit_use)
+
+# form.pushButton_replace.clicked.connect(hieroglyphs)
+form.pushButton_replace.clicked.connect(show_me_hieroglyphs)
 
 app.exec_()
