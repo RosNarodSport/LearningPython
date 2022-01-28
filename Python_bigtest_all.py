@@ -1,6 +1,6 @@
 from functools import partial
 
-from PyQt5 import QtCore
+from PyQt5 import QtCore, Qt
 from PyQt5 import uic
 from PyQt5.QtCore import QTime, QDate, QTimer
 from PyQt5.QtGui import QFont
@@ -50,9 +50,10 @@ def horizontalSlider1_sliderValue():
 
     form.label_for_progressBar.setText(str(yyy))
 
-    if yyy > 6 and yyy < 50:
-        form.label_main_pushButton.setFont(QFont('Arial', yyy))
-        form.label_in_groupBox1.setFont(QFont('Arial', yyy))
+    if yyy > 6 and yyy < 30:
+        # form.label_main_pushButton.setFont(QFont('Arial', yyy))
+        # form.label_in_groupBox1.setFont(QFont('Arial', yyy))
+        form.label_hieroglyph.setFont(QFont('Arial', yyy))
 
 
 def spinBox_detail():
@@ -82,10 +83,15 @@ def show_me_hieroglyphs():
 
 
 def update(one_dictionary_entry, i):
+    # form.label_hieroglyph.setAlignment(Qt.AlignCenter)
     y = 0
     while y < len(one_dictionary_entry):
-        form.label_in_groupBox1.setText(str(one_dictionary_entry[3])) # Выдает по одному элементу
-        print(one_dictionary_entry[y])
+        form.label_number.setText(str(one_dictionary_entry[0]))
+        form.label_hieroglyph.setText(str(one_dictionary_entry[1]))
+        form.label_pinin.setText(str(one_dictionary_entry[2]))
+        form.label_translation.setText(str(one_dictionary_entry[3]))
+        form.label_phrase.setText(str(one_dictionary_entry[4]))
+        form.label_HSK.setText(str(one_dictionary_entry[5]))
         y += 1
 
 print('Что тут?')
