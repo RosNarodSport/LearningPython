@@ -30,7 +30,7 @@ def on_click_setBack():
     form.horizontalSlider1.setProperty("value", 1)
     form.spinBox.setProperty("value", 1)
     form.dateEdit.setDateTime(QtCore.QDateTime(QDate.currentDate()))
-    form.label_in_groupBox1.setText('我')
+
 
 
 def on_click():
@@ -43,15 +43,13 @@ def on_click_replace():
 
 def horizontalSlider1_sliderValue():
     form.progressBar.setValue(form.horizontalSlider1.value())
-    yyy = form.progressBar.value()
-
     zzz = form.horizontalSlider1.value()
     form.label_for_horizontalSlider1.setText(str(zzz))
-
+    yyy = form.progressBar.value()
     form.label_for_progressBar.setText(str(yyy))
 
-    if yyy > 6 and yyy < 30:
-        # form.label_main_pushButton.setFont(QFont('Arial', yyy))
+    if yyy > 6 and yyy < 50:
+        form.label_main_pushButton.setFont(QFont('Arial', yyy))
         # form.label_in_groupBox1.setFont(QFont('Arial', yyy))
         form.label_hieroglyph.setFont(QFont('Arial', yyy))
 
