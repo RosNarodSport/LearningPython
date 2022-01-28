@@ -69,8 +69,8 @@
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>240</y>
+      <x>190</x>
+      <y>410</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -86,10 +86,10 @@
      <item>
       <widget class="QSpinBox" name="spinBox">
        <property name="minimum">
-        <number>1</number>
+        <number>12</number>
        </property>
        <property name="maximum">
-        <number>10</number>
+        <number>24</number>
        </property>
        <property name="singleStep">
         <number>1</number>
@@ -101,8 +101,8 @@
    <widget class="QWidget" name="horizontalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>280</y>
+      <x>190</x>
+      <y>450</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -134,8 +134,8 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>320</y>
+      <x>370</x>
+      <y>400</y>
       <width>171</width>
       <height>80</height>
      </rect>
@@ -188,40 +188,11 @@
      <enum>QFrame::Raised</enum>
     </property>
    </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget_3">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>410</y>
-      <width>171</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QLabel" name="label_for_horizontalSlider1">
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="horizontalSlider1">
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
    <widget class="QLabel" name="label_RadBtn1">
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>83</y>
+      <y>233</y>
       <width>47</width>
       <height>20</height>
      </rect>
@@ -234,7 +205,7 @@
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>130</y>
+      <y>280</y>
       <width>47</width>
       <height>13</height>
      </rect>
@@ -247,7 +218,7 @@
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>170</y>
+      <y>320</y>
       <width>47</width>
       <height>13</height>
      </rect>
@@ -260,7 +231,7 @@
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>210</y>
+      <y>360</y>
       <width>47</width>
       <height>13</height>
      </rect>
@@ -273,7 +244,7 @@
     <property name="geometry">
      <rect>
       <x>460</x>
-      <y>90</y>
+      <y>240</y>
       <width>82</width>
       <height>17</height>
      </rect>
@@ -286,7 +257,7 @@
     <property name="geometry">
      <rect>
       <x>460</x>
-      <y>130</y>
+      <y>280</y>
       <width>82</width>
       <height>17</height>
      </rect>
@@ -302,7 +273,7 @@
     <property name="geometry">
      <rect>
       <x>460</x>
-      <y>170</y>
+      <y>320</y>
       <width>81</width>
       <height>17</height>
      </rect>
@@ -315,7 +286,7 @@
     <property name="geometry">
      <rect>
       <x>460</x>
-      <y>210</y>
+      <y>360</y>
       <width>81</width>
       <height>16</height>
      </rect>
@@ -331,7 +302,7 @@
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>150</y>
+      <y>300</y>
       <width>131</width>
       <height>16</height>
      </rect>
@@ -344,7 +315,7 @@
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>190</y>
+      <y>340</y>
       <width>131</width>
       <height>16</height>
      </rect>
@@ -357,7 +328,7 @@
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>230</y>
+      <y>380</y>
       <width>131</width>
       <height>16</height>
      </rect>
@@ -370,7 +341,7 @@
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>70</y>
+      <y>220</y>
       <width>131</width>
       <height>16</height>
      </rect>
@@ -579,7 +550,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>270</y>
+      <y>300</y>
       <width>361</width>
       <height>31</height>
      </rect>
@@ -614,17 +585,62 @@
      <string>HSK</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_in_frame1">
+   <widget class="QSlider" name="horizontalSlider_speed">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>430</y>
-      <width>101</width>
-      <height>41</height>
+      <x>380</x>
+      <y>130</y>
+      <width>161</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_for_horizontalSlider_speed">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>150</y>
+      <width>169</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>label_in_frame1</string>
+     <string>Скорость показаа</string>
+    </property>
+   </widget>
+   <widget class="QSlider" name="horizontalSlider_size">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>70</y>
+      <width>161</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_for_horizontalSlider_size">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>90</y>
+      <width>169</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Размер иероглифа</string>
     </property>
    </widget>
   </widget>
