@@ -19,8 +19,7 @@ form.setupUi(window)
 window.show()
 
 
-# Весь новый код размещать здесь
-
+# Откат к начальным настройкам
 def on_click_setBack():
     form.label_main_pushButton.setText("Текст")
     form.label_for_horizontalSlider_size.setText('1')
@@ -37,11 +36,11 @@ def on_click_setBack():
     form.horizontalSlider_speed.setProperty("value", 2500)
 
 
-def on_click():
+def on_click(): # Проверка. Удалить
     form.label_main_pushButton.setText("Ясно")
 
 
-def on_click_replace():
+def on_click_replace(): # Проверка. Удалить
     form.label_main_pushButton.setText("replace")
 
 
@@ -50,7 +49,7 @@ def horizontalSlider_size_Value():
     form.label_for_horizontalSlider_size.setText(f'Размер иероглифа: {str(zzz)}')
 
     if zzz > 6 and zzz < 50:
-        form.label_main_pushButton.setFont(QFont('Arial', zzz))
+        form.label_main_pushButton.setFont(QFont('Arial', zzz)) # Проверка. Удалить
         form.label_hieroglyph.setFont(QFont('Arial', zzz))
 
 
@@ -59,13 +58,13 @@ def increase_character_size():
     form.label_hieroglyph.setFont(QFont('Arial', aaa))
 
 
-def dateEdit_use():
+def dateEdit_use(): # Проверка. Удалить
     pass
     # form.dateEdit
     # www = str(form.dateEdit.value())
     # form.label_for_dateEdit.setText(www)
 
-
+# Проверка. Тестовый список. Удалить
 full_list_of_hieroglyphs1 = [
     [1, '爱', 'ài', 'любить', '妈妈，我爱你。', 'HSK1'],
     [2, '八', 'bā', 'восемь', '他儿子今年八岁了。', 'HSK1'],
@@ -97,38 +96,36 @@ def increase_speed_show():
     form.label_for_horizontalSlider_speed.setText(f'Задержка показа: {round(speed_value / 1000, 2)} сек.')
     return speed_value
 
-
+# Запуск прогона со списка конкретного HSK
+    start_show_hsk1 = 0
+    start_show_hsk2 = 150
+    start_show_hsk3 = 301
+    start_show_hsk4 = 602
+start_hsk_show = 500
+print(f'Это отсечка для показа HSK с определенного места :{start_hsk_show}')
 # Отработка показа с управляемой задержкой speed
 def show_me_hieroglyphs():
-    set_time_at_start = datetime.datetime.now().time()  # Котроль выхода статьи (удалить)
-    print(f'\n__________________Отсечка: {set_time_at_start}')  # Котроль выхода статьи (удалить)
+    set_time_at_start_metod_show_me_hieroglyphs = datetime.datetime.now().time()
+    print(f'\n__________________Старт работы метода show_me_hieroglyphs: {set_time_at_start_metod_show_me_hieroglyphs}')
 
-    for i in range(0, len(full_list_of_hieroglyphs)):
+    for i in range(start_hsk_show, len(full_list_of_hieroglyphs)):
         one_dictionary_entry = full_list_of_hieroglyphs[i]
         speed = increase_speed_show()
-        QtCore.QTimer.singleShot(speed * i, partial(update, one_dictionary_entry, i))
+        QtCore.QTimer.singleShot(speed * (i-start_hsk_show), partial(update, one_dictionary_entry, i))
 
-
-# Отработка показа - не показа элемента соварной статьи по checkBox нажатию
+# Отработка показа - не показа элемента словарной статьи по checkBox нажатию
 def checkbox_hieroglyph(value):
     form.label_hieroglyph.setText(str(value))  # Поставить в зависмиость от checkBox_show_hieroglyph
 
 
 def update(one_dictionary_entry, i):
-    # form.label_hieroglyph.setAlignment(Qt.AlignCenter)
+    set_time_at_start = datetime.datetime.now().time()  # Котроль выхода статьи (удалить)
+    print(f'\n__________________Старт работы метода update: {set_time_at_start}')  # Котроль выхода статьи (удалить)
     print(f'\nЭто выход с позиции progress :{i}')
-    #
-    # set_time_at_start = datetime.datetime.now().time()  # Котроль выхода статьи (удалить)
-    # print(f'\n__________________Отсечка: {set_time_at_start}')  # Котроль выхода статьи (удалить)
     y = 0
     while y < len(one_dictionary_entry):
         form.label_number.setText(str(one_dictionary_entry[0]))
         checkbox_hieroglyph(str(one_dictionary_entry[1]))
-        # if checkBox_show_hieroglyph(form.value) == True:
-        # form.label_hieroglyph.setText(str(one_dictionary_entry[1]))
-        # else:
-        #     form.label_hieroglyph.setText('Нет ничего')
-
         form.label_pinin.setText(str(one_dictionary_entry[2]))
         form.label_translation.setText(str(one_dictionary_entry[3]))
         form.label_phrase.setText(str(one_dictionary_entry[4]))
@@ -139,7 +136,6 @@ def update(one_dictionary_entry, i):
     form.progressBar.setValue(i)
 
     set_time_end = datetime.datetime.now().time()  # Котроль выхода статьи (удалить)
-
     print(f'\n__________________Завершено: {set_time_end}')  # Котроль выхода статьи (удалить)
 
 
