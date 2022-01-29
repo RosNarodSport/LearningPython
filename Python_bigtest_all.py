@@ -1,5 +1,5 @@
 from functools import partial
-
+from hieroglyphs import full_list_of_hieroglyphs
 from PyQt5 import QtCore, Qt
 from PyQt5 import uic
 from PyQt5.QtCore import QTime, QDate, QTimer
@@ -66,7 +66,7 @@ def dateEdit_use():
     # form.label_for_dateEdit.setText(www)
 
 
-full_list_of_hieroglyphs = [
+full_list_of_hieroglyphs1 = [
     [1, '爱', 'ài', 'любить', '妈妈，我爱你。', 'HSK1'],
     [2, '八', 'bā', 'восемь', '他儿子今年八岁了。', 'HSK1'],
     [3, '爸爸', 'bàba', 'отец', '我爸爸是医生。', 'HSK1'],
