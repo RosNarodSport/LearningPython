@@ -5,7 +5,7 @@ from PyQt5 import uic
 from PyQt5.QtCore import QTime, QDate, QTimer
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import *
-import time
+import datetime
 
 # pyuic5 -x Python_bigtest_all.ui -o Python_bigtest.py - для
 # обновления кода моего окна надо выполнять регулярно
@@ -93,21 +93,26 @@ full_list_of_hieroglyphs1 = [
 def increase_speed_show():
     speed_value = form.horizontalSlider_speed.value()
     speed_value = int(speed_value)
-    print('Это speed_value', speed_value)
     form.label_for_horizontalSlider_speed.setText(f'Задержка показа: {round(speed_value/1000, 2)} сек.')
     return speed_value
 
 
 def show_me_hieroglyphs():
+    set_time_at_start = datetime.datetime.now().time()  # Котроль выхода статьи (удалить)
+    print(f'\n__________________Отсечка: {set_time_at_start}')  # Котроль выхода статьи (удалить)
+
     for i in range(0, len(full_list_of_hieroglyphs)):
         one_dictionary_entry = full_list_of_hieroglyphs[i]
         speed = increase_speed_show()
         QtCore.QTimer.singleShot(speed * i, partial(update, one_dictionary_entry, i))
 
 
-
 def update(one_dictionary_entry, i):
     # form.label_hieroglyph.setAlignment(Qt.AlignCenter)
+    print(f'\nЭто выход с позиции progress :{i}')
+    #
+    # set_time_at_start = datetime.datetime.now().time()  # Котроль выхода статьи (удалить)
+    # print(f'\n__________________Отсечка: {set_time_at_start}')  # Котроль выхода статьи (удалить)
     y = 0
     while y < len(one_dictionary_entry):
         form.label_number.setText(str(one_dictionary_entry[0]))
@@ -117,9 +122,14 @@ def update(one_dictionary_entry, i):
         form.label_phrase.setText(str(one_dictionary_entry[4]))
         form.label_HSK.setText(str(one_dictionary_entry[5]))
         y += 1
-    print(f'Эо выход с позиции progress :{i}')
+
+
     form.progressBar.setMaximum(len(full_list_of_hieroglyphs))
     form.progressBar.setValue(i)
+
+    set_time_end = datetime.datetime.now().time() # Котроль выхода статьи (удалить)
+
+    print(f'\n__________________Завершено: {set_time_end}') # Котроль выхода статьи (удалить)
 
 # show_me_hieroglyphs()
 
@@ -135,6 +145,36 @@ def vertical_print_one_complect_of_hieroglyph(complect_of_hieroglyph):
 
 def hieroglyphs():
     form.label_in_groupBox1.setText('我是')
+#
+def checkBox_show_hieroglyph(value):
+    if value == False:
+        print(f'НЕ показывать Иероглиф!')
+    else:
+        print('  Показать Иероглиф')
+
+
+def checkBox_show_pinin(value):
+    if value == False:
+        print(f'НЕ показывать PININ!')
+    else:
+        print('  Показать PININ')
+
+
+def checkBox_show_pfrase(value):
+    if value == False:
+        print(f'НЕ показывать ФРАЗУ!')
+    else:
+        print('  Показать ФРАЗУ')
+
+
+def checkBox_show_translation(value):
+    if value == False:
+        print(f'НЕ показывать ПЕРЕВОД!')
+    else:
+        print('  Показать ПЕРЕВОД')
+
+
+
 
 
 vertical_print_one_complect_of_hieroglyph(full_list_of_hieroglyphs)
@@ -145,12 +185,19 @@ form.spinBox.valueChanged.connect(increase_character_size)
 form.dateEdit.dateTimeChanged.connect(dateEdit_use)
 
 # Запуск показа статей
-form.pushButton_replace.clicked.connect(show_me_hieroglyphs)
+# form.pushButton_replace.clicked.connect(show_me_hieroglyphs)
 
 # Слайдер управления размером иероглифа при показе
 form.horizontalSlider_size.valueChanged.connect(horizontalSlider_size_Value)
 
 # Слайдер управления скоростью показа статьи
 form.horizontalSlider_speed.valueChanged.connect(increase_speed_show)
+
+# Управление показом отдельных частей словарной статьи
+form.checkBox_show_hieroglyph.stateChanged.connect(checkBox_show_hieroglyph)
+form.checkBox_show_pinin.stateChanged.connect(checkBox_show_pinin)
+form.checkBox_show_pfrase.stateChanged.connect(checkBox_show_pfrase)
+form.checkBox_show_translation.stateChanged.connect(checkBox_show_translation)
+
 
 app.exec_()
