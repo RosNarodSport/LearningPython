@@ -36,11 +36,11 @@ def on_click_setBack():
     form.horizontalSlider_speed.setProperty("value", 2500)
 
 
-def on_click(): # Проверка. Удалить
+def on_click():  # Проверка. Удалить
     form.label_main_pushButton.setText("Ясно")
 
 
-def on_click_replace(): # Проверка. Удалить
+def on_click_replace():  # Проверка. Удалить
     form.label_main_pushButton.setText("replace")
 
 
@@ -49,7 +49,7 @@ def horizontalSlider_size_Value():
     form.label_for_horizontalSlider_size.setText(f'Размер иероглифа: {str(zzz)}')
 
     if zzz > 6 and zzz < 50:
-        form.label_main_pushButton.setFont(QFont('Arial', zzz)) # Проверка. Удалить
+        form.label_main_pushButton.setFont(QFont('Arial', zzz))  # Проверка. Удалить
         form.label_hieroglyph.setFont(QFont('Arial', zzz))
 
 
@@ -58,11 +58,12 @@ def increase_character_size():
     form.label_hieroglyph.setFont(QFont('Arial', aaa))
 
 
-def dateEdit_use(): # Проверка. Удалить
+def dateEdit_use():  # Проверка. Удалить
     pass
     # form.dateEdit
     # www = str(form.dateEdit.value())
     # form.label_for_dateEdit.setText(www)
+
 
 # Проверка. Тестовый список. Удалить
 full_list_of_hieroglyphs1 = [
@@ -96,13 +97,46 @@ def increase_speed_show():
     form.label_for_horizontalSlider_speed.setText(f'Задержка показа: {round(speed_value / 1000, 2)} сек.')
     return speed_value
 
+
 # Запуск прогона со списка конкретного HSK
-    start_show_hsk1 = 0
-    start_show_hsk2 = 150
-    start_show_hsk3 = 301
-    start_show_hsk4 = 602
+
+def chackBox_start_show_hsk1(value):
+    if value == False:
+        print('Стяли метку HSK1')
+    else:
+        print('Поставили метку HSK1)')
+
+
+def chackBox_start_show_hsk2(value):
+    if value == False:
+        print('Стяли метку HSK2')
+    else:
+        print('Поставили метку HSK2')
+
+
+def chackBox_start_show_hsk3(value):
+    if value == False:
+        print('Стяли метку HSK3')
+    else:
+        print('Поставили метку HSK3')
+
+
+def chackBox_start_show_hsk4(value):
+    if value == False:
+        print('Стяли метку HSK4')
+    else:
+        print('Поставили метку HSK4')
+
+
+start_show_hsk1 = 0
+start_show_hsk2 = 150
+start_show_hsk3 = 301
+start_show_hsk4 = 602
 start_hsk_show = 500
+
 print(f'Это отсечка для показа HSK с определенного места :{start_hsk_show}')
+
+
 # Отработка показа с управляемой задержкой speed
 def show_me_hieroglyphs():
     set_time_at_start_metod_show_me_hieroglyphs = datetime.datetime.now().time()
@@ -111,7 +145,8 @@ def show_me_hieroglyphs():
     for i in range(start_hsk_show, len(full_list_of_hieroglyphs)):
         one_dictionary_entry = full_list_of_hieroglyphs[i]
         speed = increase_speed_show()
-        QtCore.QTimer.singleShot(speed * (i-start_hsk_show), partial(update, one_dictionary_entry, i))
+        QtCore.QTimer.singleShot(speed * (i - start_hsk_show), partial(update, one_dictionary_entry, i))
+
 
 # Отработка показа - не показа элемента словарной статьи по checkBox нажатию
 def checkbox_hieroglyph(value):
@@ -144,7 +179,7 @@ def hieroglyphs():
 
 
 # Проверка работы checkBock
-def checkBox_show_hieroglyph(value):
+def checkBox_show_hieroglyph_method(value):
     if value == False:
         print(f'НЕ показывать Иероглиф!')
         return value
@@ -153,21 +188,21 @@ def checkBox_show_hieroglyph(value):
         return value
 
 
-def checkBox_show_pinin(value):
+def checkBox_show_pinin_method(value):
     if value == False:
         print(f'НЕ показывать PININ!')
     else:
         print('  Показать PININ')
 
 
-def checkBox_show_pfrase(value):
+def checkBox_show_pfrase_method(value):
     if value == False:
         print(f'НЕ показывать ФРАЗУ!')
     else:
         print('  Показать ФРАЗУ')
 
 
-def checkBox_show_translation(value):
+def checkBox_show_translation_method(value):
     if value == False:
         print(f'НЕ показывать ПЕРЕВОД!')
     else:
@@ -190,9 +225,15 @@ form.horizontalSlider_size.valueChanged.connect(horizontalSlider_size_Value)
 form.horizontalSlider_speed.valueChanged.connect(increase_speed_show)
 
 # Управление показом отдельных частей словарной статьи
-form.checkBox_show_hieroglyph.stateChanged.connect(checkBox_show_hieroglyph)
-form.checkBox_show_pinin.stateChanged.connect(checkBox_show_pinin)
-form.checkBox_show_pfrase.stateChanged.connect(checkBox_show_pfrase)
-form.checkBox_show_translation.stateChanged.connect(checkBox_show_translation)
+form.checkBox_show_hieroglyph.stateChanged.connect(checkBox_show_hieroglyph_method)
+form.checkBox_show_pinin.stateChanged.connect(checkBox_show_pinin_method)
+form.checkBox_show_pfrase.stateChanged.connect(checkBox_show_pfrase_method)
+form.checkBox_show_translation.stateChanged.connect(checkBox_show_translation_method)
+
+# Управление запуском показа словарных статей с конкретной группы HSK
+form.checkBox_show_hsk1.stateChanged.connect(chackBox_start_show_hsk1)
+form.checkBox_show_hsk2.stateChanged.connect(chackBox_start_show_hsk2)
+form.checkBox_show_hsk3.stateChanged.connect(chackBox_start_show_hsk3)
+form.checkBox_show_hsk4.stateChanged.connect(chackBox_start_show_hsk4)
 
 app.exec_()
