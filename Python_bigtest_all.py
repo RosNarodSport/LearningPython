@@ -46,16 +46,12 @@ def on_click_replace():
 
 
 def horizontalSlider_size_Value():
-    form.progressBar.setValue(form.horizontalSlider_size.value())
     zzz = form.horizontalSlider_size.value()
     form.label_for_horizontalSlider_size.setText(f'Размер иероглифа: {str(zzz)}')
-    yyy = form.progressBar.value()
-    form.label_for_progressBar.setText(str(yyy))
 
-    if yyy > 6 and yyy < 50:
-        form.label_main_pushButton.setFont(QFont('Arial', yyy))
-        # form.label_in_groupBox1.setFont(QFont('Arial', yyy))
-        form.label_hieroglyph.setFont(QFont('Arial', yyy))
+    if zzz > 6 and zzz < 50:
+        form.label_main_pushButton.setFont(QFont('Arial', zzz))
+        form.label_hieroglyph.setFont(QFont('Arial', zzz))
 
 
 def increase_character_size():
@@ -109,6 +105,7 @@ def show_me_hieroglyphs():
         QtCore.QTimer.singleShot(speed * i, partial(update, one_dictionary_entry, i))
 
 
+
 def update(one_dictionary_entry, i):
     # form.label_hieroglyph.setAlignment(Qt.AlignCenter)
     y = 0
@@ -120,7 +117,9 @@ def update(one_dictionary_entry, i):
         form.label_phrase.setText(str(one_dictionary_entry[4]))
         form.label_HSK.setText(str(one_dictionary_entry[5]))
         y += 1
-
+    print(f'Эо выход с позиции progress :{i}')
+    form.progressBar.setMaximum(len(full_list_of_hieroglyphs))
+    form.progressBar.setValue(i)
 
 # show_me_hieroglyphs()
 
