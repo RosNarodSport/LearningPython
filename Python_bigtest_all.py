@@ -89,14 +89,16 @@ full_list_of_hieroglyphs1 = [
     [20, '东西', 'dōngxi', 'вещь, предмет', '我在商店买了很多东西。', 'HSK1']
 ]
 
+
 # Метод управляет изменением скорости показа иероглифа
 def increase_speed_show():
     speed_value = form.horizontalSlider_speed.value()
     speed_value = int(speed_value)
-    form.label_for_horizontalSlider_speed.setText(f'Задержка показа: {round(speed_value/1000, 2)} сек.')
+    form.label_for_horizontalSlider_speed.setText(f'Задержка показа: {round(speed_value / 1000, 2)} сек.')
     return speed_value
 
 
+# Отработка показа с управляемой задержкой speed
 def show_me_hieroglyphs():
     set_time_at_start = datetime.datetime.now().time()  # Котроль выхода статьи (удалить)
     print(f'\n__________________Отсечка: {set_time_at_start}')  # Котроль выхода статьи (удалить)
@@ -105,6 +107,11 @@ def show_me_hieroglyphs():
         one_dictionary_entry = full_list_of_hieroglyphs[i]
         speed = increase_speed_show()
         QtCore.QTimer.singleShot(speed * i, partial(update, one_dictionary_entry, i))
+
+
+# Отработка показа - не показа элемента соварной статьи по checkBox нажатию
+def checkbox_hieroglyph(value):
+    form.label_hieroglyph.setText(str(value))  # Поставить в зависмиость от checkBox_show_hieroglyph
 
 
 def update(one_dictionary_entry, i):
@@ -116,41 +123,38 @@ def update(one_dictionary_entry, i):
     y = 0
     while y < len(one_dictionary_entry):
         form.label_number.setText(str(one_dictionary_entry[0]))
-        form.label_hieroglyph.setText(str(one_dictionary_entry[1]))
+        checkbox_hieroglyph(str(one_dictionary_entry[1]))
+        # if checkBox_show_hieroglyph(form.value) == True:
+        # form.label_hieroglyph.setText(str(one_dictionary_entry[1]))
+        # else:
+        #     form.label_hieroglyph.setText('Нет ничего')
+
         form.label_pinin.setText(str(one_dictionary_entry[2]))
         form.label_translation.setText(str(one_dictionary_entry[3]))
         form.label_phrase.setText(str(one_dictionary_entry[4]))
         form.label_HSK.setText(str(one_dictionary_entry[5]))
         y += 1
 
-
     form.progressBar.setMaximum(len(full_list_of_hieroglyphs))
     form.progressBar.setValue(i)
 
-    set_time_end = datetime.datetime.now().time() # Котроль выхода статьи (удалить)
+    set_time_end = datetime.datetime.now().time()  # Котроль выхода статьи (удалить)
 
-    print(f'\n__________________Завершено: {set_time_end}') # Котроль выхода статьи (удалить)
-
-# show_me_hieroglyphs()
-
-# update(full_list_of_hieroglyphs, 0)
-
-def vertical_print_one_complect_of_hieroglyph(complect_of_hieroglyph):
-    delimiter = ""
-    for x in complect_of_hieroglyph:
-        for y in x:
-            y = str(y)
-            # print(delimiter.join(y))
+    print(f'\n__________________Завершено: {set_time_end}')  # Котроль выхода статьи (удалить)
 
 
 def hieroglyphs():
     form.label_in_groupBox1.setText('我是')
-#
+
+
+# Проверка работы checkBock
 def checkBox_show_hieroglyph(value):
     if value == False:
         print(f'НЕ показывать Иероглиф!')
+        return value
     else:
         print('  Показать Иероглиф')
+        return value
 
 
 def checkBox_show_pinin(value):
@@ -174,10 +178,6 @@ def checkBox_show_translation(value):
         print('  Показать ПЕРЕВОД')
 
 
-
-
-
-vertical_print_one_complect_of_hieroglyph(full_list_of_hieroglyphs)
 form.main_pushButton.clicked.connect(on_click)
 form.pushButton_setBack.clicked.connect(on_click_setBack)
 
@@ -185,7 +185,7 @@ form.spinBox.valueChanged.connect(increase_character_size)
 form.dateEdit.dateTimeChanged.connect(dateEdit_use)
 
 # Запуск показа статей
-# form.pushButton_replace.clicked.connect(show_me_hieroglyphs)
+form.pushButton_replace.clicked.connect(show_me_hieroglyphs)
 
 # Слайдер управления размером иероглифа при показе
 form.horizontalSlider_size.valueChanged.connect(horizontalSlider_size_Value)
@@ -198,6 +198,5 @@ form.checkBox_show_hieroglyph.stateChanged.connect(checkBox_show_hieroglyph)
 form.checkBox_show_pinin.stateChanged.connect(checkBox_show_pinin)
 form.checkBox_show_pfrase.stateChanged.connect(checkBox_show_pfrase)
 form.checkBox_show_translation.stateChanged.connect(checkBox_show_translation)
-
 
 app.exec_()
