@@ -18,38 +18,34 @@ form = From()
 form.setupUi(window)
 window.show()
 
+
 # Блок для работы со списками иероглифов из файла hieroglyphs.py
 
-
-# Поставить if и в зависимости от vaqlue checkBoxHSK помещать int в переменную number,
 # вызывать метод get_my_number_for_start_hsk(number). Или делать это прямо в методе!
 
 def get_my_number_for_start_hsk():
     global start_hsk_show
     if form.checkBox_show_hsk1.isChecked() == True:
-        start_hsk_show = hsk1
+        start_hsk_show = hsk4
         print(f'Что if :{form.checkBox_show_hsk1.isChecked()}')
     else:
         print(f'Что else  :{form.checkBox_show_hsk1.isChecked()}')
         print('Сняли метку - False')
+        start_hsk_show = []
+
     return start_hsk_show
 
-get_my_number_for_start_hsk()
 
 # Отработка показа с управляемой задержкой speed
 def show_me_hieroglyphs():
+    get_my_number_for_start_hsk() # С нажатием кнопки СТАРТ - проверяю статус показа HSK1
     set_time_at_start_metod_show_me_hieroglyphs = datetime.datetime.now().time()
-    print(f'\n__________________Старт метода show_me_hieroglyphs: {0}')
+    print(f'\n__________________Старт метода show_me_hieroglyphs: {set_time_at_start_metod_show_me_hieroglyphs}')
 
-    for i in range(0, 150):
-        one_dictionary_entry = hsk1[i]
+    for i in range(0, len(start_hsk_show)):
+        one_dictionary_entry = start_hsk_show[i]
         speed = increase_speed_show()
         QtCore.QTimer.singleShot(speed * i, partial(update, one_dictionary_entry, i))
-
-
-# Отработка показа - не показа элемента словарной статьи по checkBox нажатию
-def checkbox_hieroglyph(value):
-    form.label_hieroglyph.setText(str(value))  # Поставить в зависмиость от checkBox_show_hieroglyph
 
 
 def update(one_dictionary_entry, i):
@@ -71,6 +67,11 @@ def update(one_dictionary_entry, i):
 
     set_time_end = datetime.datetime.now().time()  # Котроль выхода статьи (удалить)
     print(f'\n__________________Завершено: {set_time_end}')  # Котроль выхода статьи (удалить)
+
+
+# Отработка показа - не показа элемента словарной статьи по checkBox нажатию
+def checkbox_hieroglyph(value):
+    form.label_hieroglyph.setText(str(value))  # Поставить в зависмиость от checkBox_show_hieroglyph
 
 
 # form.checkBox_show_hsk1.stateChanged.connect(checkBox_start_show_hsk1_method)
@@ -161,12 +162,6 @@ def checkBox_start_show_hsk4_method(value):
     else:
         print('Поставили метку HSK4')
 
-# get_my_number_for_start_hsk должен передать список!!! первый элемент!!! int
-print(f'Это отсечка для показа HSK с определенного места :{get_my_number_for_start_hsk}')
-
-
-
-
 
 def hieroglyphs():
     form.label_in_groupBox1.setText('我是')
@@ -210,7 +205,7 @@ form.spinBox.valueChanged.connect(increase_character_size)
 form.dateEdit.dateTimeChanged.connect(dateEdit_use)
 
 # Запуск показа статей
-form.pushButton_replace.clicked.connect(show_me_hieroglyphs)
+form.pushButton_start_all.clicked.connect(show_me_hieroglyphs)
 
 # Слайдер управления размером иероглифа при показе
 form.horizontalSlider_size.valueChanged.connect(horizontalSlider_size_Value)
