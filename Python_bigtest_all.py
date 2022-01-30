@@ -25,10 +25,45 @@ window.show()
 
 def get_my_number_for_start_hsk():
     global start_hsk_show
+    # Формирование временного списка через while (загнать потом в отдельный метод)
+    start_hsk_show = []
     if form.checkBox_show_hsk1.isChecked() == True:
-        start_hsk_show = hsk4
-        print(f'Что if :{form.checkBox_show_hsk1.isChecked()}')
-    else:
+        i1 = 0
+        while i1 < len(hsk1):
+            start_hsk_show.append(hsk1[i1])
+            i1 += 1
+        print(start_hsk_show)
+        print(f'Идет показ {start_hsk_show[0][5]}')
+        return start_hsk_show
+
+    elif form.checkBox_show_hsk2.isChecked() == True:
+        i2 = 0
+        while i2 < len(hsk2):
+            start_hsk_show.append(hsk2[i2])
+            i2 += 1
+        print(start_hsk_show)
+        print(f'Идет показ {start_hsk_show[0][5]}')
+        return start_hsk_show
+
+    elif form.checkBox_show_hsk3.isChecked() == True:
+        i3 = 0
+        while i3 < len(hsk3):
+            start_hsk_show.append(hsk3[i3])
+            i3 += 1
+        print(start_hsk_show)
+        print(f'Идет показ {start_hsk_show[0][5]}')
+        return start_hsk_show
+
+    elif form.checkBox_show_hsk4.isChecked() == True:
+        i4 = 0
+        while i4 < len(hsk4):
+            start_hsk_show.append(hsk4[i4])
+            i4 += 1
+        print(start_hsk_show)
+        print(f'Идет показ {start_hsk_show[0][5]}')
+        return start_hsk_show
+
+    else: # Ошибка тут. Если ничего не выбрано, то все крушится и закрывается
         print(f'Что else  :{form.checkBox_show_hsk1.isChecked()}')
         print('Сняли метку - False')
         start_hsk_show = []
@@ -38,7 +73,7 @@ def get_my_number_for_start_hsk():
 
 # Отработка показа с управляемой задержкой speed
 def show_me_hieroglyphs():
-    get_my_number_for_start_hsk() # С нажатием кнопки СТАРТ - проверяю статус показа HSK1
+    get_my_number_for_start_hsk() # С нажатием кнопки СТАРТ - проверяю статус показа HSK-группы
     set_time_at_start_metod_show_me_hieroglyphs = datetime.datetime.now().time()
     print(f'\n__________________Старт метода show_me_hieroglyphs: {set_time_at_start_metod_show_me_hieroglyphs}')
 
