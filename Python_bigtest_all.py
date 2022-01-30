@@ -1,8 +1,8 @@
 from functools import partial
-from hieroglyphs import full_list_of_hieroglyphs
+from hieroglyphs import *
 from PyQt5 import QtCore, Qt
 from PyQt5 import uic
-from PyQt5.QtCore import QTime, QDate, QTimer
+from PyQt5.QtCore import QDate
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import *
 import datetime
@@ -18,6 +18,65 @@ form = From()
 form.setupUi(window)
 window.show()
 
+# Блок для работы со списками иероглифов из файла hieroglyphs.py
+
+
+# Поставить if и в зависимости от vaqlue checkBoxHSK помещать int в переменную number,
+# вызывать метод get_my_number_for_start_hsk(number). Или делать это прямо в методе!
+
+def get_my_number_for_start_hsk():
+    global start_hsk_show
+    if form.checkBox_show_hsk1.isChecked() == True:
+        start_hsk_show = hsk1
+        print(f'Что if :{form.checkBox_show_hsk1.isChecked()}')
+    else:
+        print(f'Что else  :{form.checkBox_show_hsk1.isChecked()}')
+        print('Сняли метку - False')
+    return start_hsk_show
+
+get_my_number_for_start_hsk()
+
+# Отработка показа с управляемой задержкой speed
+def show_me_hieroglyphs():
+    set_time_at_start_metod_show_me_hieroglyphs = datetime.datetime.now().time()
+    print(f'\n__________________Старт метода show_me_hieroglyphs: {0}')
+
+    for i in range(0, 150):
+        one_dictionary_entry = hsk1[i]
+        speed = increase_speed_show()
+        QtCore.QTimer.singleShot(speed * i, partial(update, one_dictionary_entry, i))
+
+
+# Отработка показа - не показа элемента словарной статьи по checkBox нажатию
+def checkbox_hieroglyph(value):
+    form.label_hieroglyph.setText(str(value))  # Поставить в зависмиость от checkBox_show_hieroglyph
+
+
+def update(one_dictionary_entry, i):
+    set_time_at_start = datetime.datetime.now().time()  # Котроль выхода статьи (удалить)
+    print(f'\n__________________Старт работы метода update: {set_time_at_start}')  # Котроль выхода статьи (удалить)
+    print(f'\nЭто выход с позиции progress :{i}')
+    y = 0
+    while y < len(one_dictionary_entry):
+        form.label_number.setText(str(one_dictionary_entry[0]))
+        checkbox_hieroglyph(str(one_dictionary_entry[1]))
+        form.label_pinin.setText(str(one_dictionary_entry[2]))
+        form.label_translation.setText(str(one_dictionary_entry[3]))
+        form.label_phrase.setText(str(one_dictionary_entry[4]))
+        form.label_HSK.setText(str(one_dictionary_entry[5]))
+        y += 1
+
+    form.progressBar.setMaximum(len(start_hsk_show))
+    form.progressBar.setValue(i)
+
+    set_time_end = datetime.datetime.now().time()  # Котроль выхода статьи (удалить)
+    print(f'\n__________________Завершено: {set_time_end}')  # Котроль выхода статьи (удалить)
+
+
+# form.checkBox_show_hsk1.stateChanged.connect(checkBox_start_show_hsk1_method)
+# form.checkBox_show_hsk2.stateChanged.connect(checkBox_start_show_hsk2_method)
+# form.checkBox_show_hsk3.stateChanged.connect(checkBox_start_show_hsk3_method)
+# form.checkBox_show_hsk4.stateChanged.connect(checkBox_start_show_hsk4_method)
 
 # Откат к начальным настройкам
 def on_click_setBack():
@@ -46,10 +105,10 @@ def on_click_replace():  # Проверка. Удалить
 
 def horizontalSlider_size_Value():
     zzz = form.horizontalSlider_size.value()
-    form.label_for_horizontalSlider_size.setText(f'Размер иероглифа: {str(zzz)}')
+    form.label_for_horizontalSlider_size.setText(str(zzz))
 
     if zzz > 6 and zzz < 50:
-        form.label_main_pushButton.setFont(QFont('Arial', zzz))  # Проверка. Удалить
+        form.label_for_horizontalSlider_size.setFont(QFont('Arial', zzz))
         form.label_hieroglyph.setFont(QFont('Arial', zzz))
 
 
@@ -65,113 +124,48 @@ def dateEdit_use():  # Проверка. Удалить
     # form.label_for_dateEdit.setText(www)
 
 
-# Проверка. Тестовый список. Удалить
-full_list_of_hieroglyphs1 = [
-    [1, '爱', 'ài', 'любить', '妈妈，我爱你。', 'HSK1'],
-    [2, '八', 'bā', 'восемь', '他儿子今年八岁了。', 'HSK1'],
-    [3, '爸爸', 'bàba', 'отец', '我爸爸是医生。', 'HSK1'],
-    [4, '杯子', 'bēizi', 'стакан, чашка', '杯子里有茶。', 'HSK1'],
-    [5, '北京', 'Běijīng', 'Пекин', '我住在北京。', 'HSK1'],
-    [6, '本', 'běn', 'применяется при счете книг', '桌子上有一本书。', 'HSK1'],
-    [7, '不客气', 'bú kèqi', 'Не стоит.', '甲：谢谢你！乙：不客气。', 'HSK1'],
-    [8, '不', 'bù', 'не, нет', '我不是学生。', 'HSK1'],
-    [9, '菜', 'cài', 'овощи', '我去超市买点儿菜。', 'HSK1'],
-    [10, '茶', 'chá', 'чай', '请喝杯茶吧。', 'HSK1'],
-    [11, '吃', 'chī', 'кушать, есть', '请吃点儿米饭。', 'HSK1'],
-    [12, '出租车', 'chūzūchē', 'такси', '我们坐出租车去火车站。', 'HSK1'],
-    [13, '打电话', 'dǎdiànhuà', 'звонить или говорить по телефону', '他在打电话呢。', 'HSK1'],
-    [14, '大', 'dà', 'большой, крупный', '这个苹果很大。', 'HSK1'],
-    [15, '的', 'de', 'присоединяет определение', '这是我的书。', 'HSK1'],
-    [16, '点', 'diǎn', '(который) час', '现在是下午 3点20。', 'HSK1'],
-    [17, '电脑', 'diànnǎo', 'компьютер', '我买了个电脑。', 'HSK1'],
-    [18, '电视', 'diànshì', 'телевизор', '妈妈在看电视。', 'HSK1'],
-    [19, '电影', 'diànyǐng', 'кинофильм', '我喜欢看电影。', 'HSK1'],
-    [20, '东西', 'dōngxi', 'вещь, предмет', '我在商店买了很多东西。', 'HSK1']
-]
-
-
 # Метод управляет изменением скорости показа иероглифа
 def increase_speed_show():
     speed_value = form.horizontalSlider_speed.value()
     speed_value = int(speed_value)
-    form.label_for_horizontalSlider_speed.setText(f'Задержка показа: {round(speed_value / 1000, 2)} сек.')
+    form.label_for_horizontalSlider_speed.setText(f'{round(speed_value / 1000, 1)} сек')
     return speed_value
 
 
 # Запуск прогона со списка конкретного HSK
 
-def chackBox_start_show_hsk1(value):
+def checkBox_start_show_hsk1_method(value):
     if value == False:
         print('Стяли метку HSK1')
     else:
-        print('Поставили метку HSK1)')
+        print('Поставили метку HSK1')
 
 
-def chackBox_start_show_hsk2(value):
+def checkBox_start_show_hsk2_method(value):
     if value == False:
         print('Стяли метку HSK2')
     else:
         print('Поставили метку HSK2')
 
 
-def chackBox_start_show_hsk3(value):
+def checkBox_start_show_hsk3_method(value):
     if value == False:
         print('Стяли метку HSK3')
     else:
         print('Поставили метку HSK3')
 
 
-def chackBox_start_show_hsk4(value):
+def checkBox_start_show_hsk4_method(value):
     if value == False:
         print('Стяли метку HSK4')
     else:
         print('Поставили метку HSK4')
 
-
-start_show_hsk1 = 0
-start_show_hsk2 = 150
-start_show_hsk3 = 301
-start_show_hsk4 = 602
-start_hsk_show = 500
-
-print(f'Это отсечка для показа HSK с определенного места :{start_hsk_show}')
+# get_my_number_for_start_hsk должен передать список!!! первый элемент!!! int
+print(f'Это отсечка для показа HSK с определенного места :{get_my_number_for_start_hsk}')
 
 
-# Отработка показа с управляемой задержкой speed
-def show_me_hieroglyphs():
-    set_time_at_start_metod_show_me_hieroglyphs = datetime.datetime.now().time()
-    print(f'\n__________________Старт работы метода show_me_hieroglyphs: {set_time_at_start_metod_show_me_hieroglyphs}')
 
-    for i in range(start_hsk_show, len(full_list_of_hieroglyphs)):
-        one_dictionary_entry = full_list_of_hieroglyphs[i]
-        speed = increase_speed_show()
-        QtCore.QTimer.singleShot(speed * (i - start_hsk_show), partial(update, one_dictionary_entry, i))
-
-
-# Отработка показа - не показа элемента словарной статьи по checkBox нажатию
-def checkbox_hieroglyph(value):
-    form.label_hieroglyph.setText(str(value))  # Поставить в зависмиость от checkBox_show_hieroglyph
-
-
-def update(one_dictionary_entry, i):
-    set_time_at_start = datetime.datetime.now().time()  # Котроль выхода статьи (удалить)
-    print(f'\n__________________Старт работы метода update: {set_time_at_start}')  # Котроль выхода статьи (удалить)
-    print(f'\nЭто выход с позиции progress :{i}')
-    y = 0
-    while y < len(one_dictionary_entry):
-        form.label_number.setText(str(one_dictionary_entry[0]))
-        checkbox_hieroglyph(str(one_dictionary_entry[1]))
-        form.label_pinin.setText(str(one_dictionary_entry[2]))
-        form.label_translation.setText(str(one_dictionary_entry[3]))
-        form.label_phrase.setText(str(one_dictionary_entry[4]))
-        form.label_HSK.setText(str(one_dictionary_entry[5]))
-        y += 1
-
-    form.progressBar.setMaximum(len(full_list_of_hieroglyphs))
-    form.progressBar.setValue(i)
-
-    set_time_end = datetime.datetime.now().time()  # Котроль выхода статьи (удалить)
-    print(f'\n__________________Завершено: {set_time_end}')  # Котроль выхода статьи (удалить)
 
 
 def hieroglyphs():
@@ -231,9 +225,9 @@ form.checkBox_show_pfrase.stateChanged.connect(checkBox_show_pfrase_method)
 form.checkBox_show_translation.stateChanged.connect(checkBox_show_translation_method)
 
 # Управление запуском показа словарных статей с конкретной группы HSK
-form.checkBox_show_hsk1.stateChanged.connect(chackBox_start_show_hsk1)
-form.checkBox_show_hsk2.stateChanged.connect(chackBox_start_show_hsk2)
-form.checkBox_show_hsk3.stateChanged.connect(chackBox_start_show_hsk3)
-form.checkBox_show_hsk4.stateChanged.connect(chackBox_start_show_hsk4)
+form.checkBox_show_hsk1.stateChanged.connect(checkBox_start_show_hsk1_method)
+form.checkBox_show_hsk2.stateChanged.connect(checkBox_start_show_hsk2_method)
+form.checkBox_show_hsk3.stateChanged.connect(checkBox_start_show_hsk3_method)
+form.checkBox_show_hsk4.stateChanged.connect(checkBox_start_show_hsk4_method)
 
 app.exec_()
