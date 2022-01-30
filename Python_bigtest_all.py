@@ -1,6 +1,8 @@
 from functools import partial
 from hieroglyphs import *
-from PyQt5 import QtCore, Qt
+from hsk_selection_options import *
+
+from PyQt5 import QtCore, Qt, QtGui
 from PyQt5 import uic
 from PyQt5.QtCore import QDate
 from PyQt5.QtGui import QFont
@@ -19,64 +21,50 @@ form.setupUi(window)
 window.show()
 
 
-# Блок для работы со списками иероглифов из файла hieroglyphs.py
-
 # вызывать метод get_my_number_for_start_hsk(number). Или делать это прямо в методе!
+
+def label_status_text_show_group():
+    form.label_status.setText("<span style='color: #008000;'>Идет показ...</span>")
+    form.label_status.setFont(QFont('Arial', 12))
+
+
+def label_status_text_no_group():
+    form.label_status.setText("<span style='color: #f00;'>Не выбрана группа HSK</span>")
+    form.label_status.setFont(QFont('Arial', 12))
+
+
+def label_status_text_show_is_done():
+    form.label_status.setText("<span style='color: #0000ff;'>Показ завершен!</span>")
+    form.label_status.setFont(QFont('Arial', 12))
+
 
 def get_my_number_for_start_hsk():
     global start_hsk_show
-    # Формирование временного списка через while (загнать потом в отдельный метод)
-    start_hsk_show = []
+    start_hsk_show_temporary = []
     if form.checkBox_show_hsk1.isChecked() == True:
-        i1 = 0
-        while i1 < len(hsk1):
-            start_hsk_show.append(hsk1[i1])
-            i1 += 1
-        print(start_hsk_show)
-        print(f'Идет показ {start_hsk_show[0][5]}')
-        return start_hsk_show
-
-    elif form.checkBox_show_hsk2.isChecked() == True:
-        i2 = 0
-        while i2 < len(hsk2):
-            start_hsk_show.append(hsk2[i2])
-            i2 += 1
-        print(start_hsk_show)
-        print(f'Идет показ {start_hsk_show[0][5]}')
-        return start_hsk_show
-
-    elif form.checkBox_show_hsk3.isChecked() == True:
-        i3 = 0
-        while i3 < len(hsk3):
-            start_hsk_show.append(hsk3[i3])
-            i3 += 1
-        print(start_hsk_show)
-        print(f'Идет показ {start_hsk_show[0][5]}')
-        return start_hsk_show
-
-    elif form.checkBox_show_hsk4.isChecked() == True:
-        i4 = 0
-        while i4 < len(hsk4):
-            start_hsk_show.append(hsk4[i4])
-            i4 += 1
-        print(start_hsk_show)
-        print(f'Идет показ {start_hsk_show[0][5]}')
-        return start_hsk_show
-
-    else: # Ошибка тут. Если ничего не выбрано, то все крушится и закрывается
-        print(f'Что else  :{form.checkBox_show_hsk1.isChecked()}')
-        print('Сняли метку - False')
+        start_hsk_show_temporary.extend(hsk1)
+        start_hsk_show = start_hsk_show_temporary
+        label_status_text_show_group()
+    else:
         start_hsk_show = []
+        label_status_text_no_group()
 
     return start_hsk_show
+
+    if form.checkBox_show_hsk2.isChecked() == True:
+        pass
+
+    if form.checkBox_show_hsk3.isChecked() == True:
+        pass
+
+    if form.checkBox_show_hsk4.isChecked() == True:
+        pass
 
 
 # Отработка показа с управляемой задержкой speed
 def show_me_hieroglyphs():
-    get_my_number_for_start_hsk() # С нажатием кнопки СТАРТ - проверяю статус показа HSK-группы
+    get_my_number_for_start_hsk()
     set_time_at_start_metod_show_me_hieroglyphs = datetime.datetime.now().time()
-    print(f'\n__________________Старт метода show_me_hieroglyphs: {set_time_at_start_metod_show_me_hieroglyphs}')
-
     for i in range(0, len(start_hsk_show)):
         one_dictionary_entry = start_hsk_show[i]
         speed = increase_speed_show()
@@ -84,9 +72,11 @@ def show_me_hieroglyphs():
 
 
 def update(one_dictionary_entry, i):
-    set_time_at_start = datetime.datetime.now().time()  # Котроль выхода статьи (удалить)
-    print(f'\n__________________Старт работы метода update: {set_time_at_start}')  # Котроль выхода статьи (удалить)
-    print(f'\nЭто выход с позиции progress :{i}')
+    if i >= len(start_hsk_show):
+        label_status_text_show_is_done() # Не работает. Вместо этого стоит Идет показ...
+    else:
+        pass
+
     y = 0
     while y < len(one_dictionary_entry):
         form.label_number.setText(str(one_dictionary_entry[0]))
@@ -168,7 +158,7 @@ def increase_speed_show():
     return speed_value
 
 
-# Запуск прогона со списка конкретного HSK
+# Запуск прогона со списка конкретного HSK. Это тестирование работы checkBox'ов (потом удалить)
 
 def checkBox_start_show_hsk1_method(value):
     if value == False:
@@ -202,7 +192,7 @@ def hieroglyphs():
     form.label_in_groupBox1.setText('我是')
 
 
-# Проверка работы checkBock
+# Проверка работы checkBox
 def checkBox_show_hieroglyph_method(value):
     if value == False:
         print(f'НЕ показывать Иероглиф!')
@@ -234,6 +224,8 @@ def checkBox_show_translation_method(value):
 
 
 form.main_pushButton.clicked.connect(on_click)
+
+# Кнопка возврата к исходдным настройкам
 form.pushButton_setBack.clicked.connect(on_click_setBack)
 
 form.spinBox.valueChanged.connect(increase_character_size)
