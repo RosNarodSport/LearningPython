@@ -41,7 +41,7 @@ def label_status_text_show_is_done():
 def get_my_number_for_start_hsk():
     global start_hsk_show
     start_hsk_show_temporary = []
-    if form.checkBox_show_hsk1.isChecked() == True:
+    if form.checkBox_show_hsk1.isChecked():
         start_hsk_show_temporary.extend(hsk1)
         start_hsk_show = start_hsk_show_temporary
         label_status_text_show_group()
@@ -54,16 +54,38 @@ def get_my_number_for_start_hsk():
     if form.checkBox_show_hsk2.isChecked() == True:
         pass
 
-    if form.checkBox_show_hsk3.isChecked() == True:
-        pass
 
-    if form.checkBox_show_hsk4.isChecked() == True:
-        pass
+def get_my_number_for_start_hsk2():
+    global start_hsk_show
+    start_hsk_show_temporary = []
+    if form.checkBox_show_hsk2.isChecked() == True:
+        start_hsk_show_temporary.extend(hsk2)
+        start_hsk_show = start_hsk_show_temporary
+        label_status_text_show_group()
+    else:
+        start_hsk_show = []
+        label_status_text_no_group()
+    return start_hsk_show
+
+    # if form.checkBox_show_hsk3.isChecked() == True:
+    #     pass
+    #
+    # if form.checkBox_show_hsk4.isChecked() == True:
+    #     pass
 
 
 # Отработка показа с управляемой задержкой speed. Прыгают цифры (не могу понять)
 def show_me_hieroglyphs():
-    get_my_number_for_start_hsk()
+    if form.checkBox_show_hsk1.isChecked() == True:
+        get_my_number_for_start_hsk()
+        print('HSK1\n_________________\n', start_hsk_show)
+    elif form.checkBox_show_hsk2.isChecked() == True:
+        get_my_number_for_start_hsk2()
+        print('HSK2\n_________________\n', start_hsk_show)
+    else:
+        label_status_text_no_group()
+
+    # get_my_number_for_start_hsk()
     for i in range(0, len(start_hsk_show)):
         one_dictionary_entry = start_hsk_show[i]
         speed = increase_speed_show()
@@ -90,7 +112,7 @@ def update(one_dictionary_entry, i):
     form.progressBar.setValue(i)
 
     set_time_end = datetime.datetime.now()  # Котроль выхода статьи (удалить)
-    print(set_time_end)  # Котроль выхода статьи (удалить)
+    print(one_dictionary_entry[0], '-->', one_dictionary_entry[1], '-->', set_time_end)  # Котроль выхода статьи (удалить)
 
 
 # Отработка показа - не показа элемента словарной статьи по checkBox нажатию
@@ -98,18 +120,11 @@ def checkbox_hieroglyph(value):
     form.label_hieroglyph.setText(str(value))  # Поставить в зависмиость от checkBox_show_hieroglyph
 
 
-# form.checkBox_show_hsk1.stateChanged.connect(checkBox_start_show_hsk1_method)
-# form.checkBox_show_hsk2.stateChanged.connect(checkBox_start_show_hsk2_method)
-# form.checkBox_show_hsk3.stateChanged.connect(checkBox_start_show_hsk3_method)
-# form.checkBox_show_hsk4.stateChanged.connect(checkBox_start_show_hsk4_method)
-
 # Откат к начальным настройкам
 def on_click_setBack():
-    form.label_main_pushButton.setText("Текст")
     form.label_for_horizontalSlider_size.setText('1')
     form.horizontalSlider_size.setProperty("value", 12)
 
-    form.label_main_pushButton.setFont(QFont('Arial', 12))
     form.label_hieroglyph.setFont(QFont('Arial', 12))
 
     form.label_for_spinBox.setText('1')
@@ -142,11 +157,8 @@ def increase_character_size():
     form.label_hieroglyph.setFont(QFont('Arial', aaa))
 
 
-def dateEdit_use():  # Проверка. Удалить
-    pass
-    # form.dateEdit
-    # www = str(form.dateEdit.value())
-    # form.label_for_dateEdit.setText(www)
+# def dateEdit_use():  # Проверка. Удалить
+#     pass
 
 
 # Метод управляет изменением скорости показа иероглифа
@@ -231,13 +243,11 @@ def checkBox_show_translation_method(value):
         print('  Показать ПЕРЕВОД')
 
 
-form.main_pushButton.clicked.connect(on_click)
-
 # Кнопка возврата к исходдным настройкам
 form.pushButton_setBack.clicked.connect(on_click_setBack)
 
 form.spinBox.valueChanged.connect(increase_character_size)
-form.dateEdit.dateTimeChanged.connect(dateEdit_use)
+# form.dateEdit.dateTimeChanged.connect(dateEdit_use)
 
 # Запуск показа статей
 form.pushButton_start_all.clicked.connect(show_me_hieroglyphs)
