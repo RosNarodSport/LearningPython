@@ -160,32 +160,41 @@ def increase_speed_show():
 # Запуск прогона со списка конкретного HSK. Это тестирование работы checkBox'ов (потом удалить)
 
 def checkBox_start_show_hsk1_method(value):
-    if value == False:
-        print('Стяли метку HSK1')
+    if value == 2:
+        print('Поставил метку HSK1')
+        print(f'Должно быть 2. По факту: {form.checkBox_show_hsk1.checkState()}')
     else:
-        print('Поставили метку HSK1')
+        print('______Снял метку HSK1')
+        print(f'Должен быть 0. По факту: {form.checkBox_show_hsk1.checkState()}')
 
 
 def checkBox_start_show_hsk2_method(value):
-    if value == False:
-        print('Стяли метку HSK2')
+    if value == 2:
+        print('Поставил метку HSK2')
+        print(f'Должно быть 2. По факту: {form.checkBox_show_hsk2.checkState()}')
     else:
-        print('Поставили метку HSK2')
+        print('______Снял метку HSK2')
+        print(f'Должен быть 0. По факту: {form.checkBox_show_hsk2.checkState()}')
 
 
 def checkBox_start_show_hsk3_method(value):
-    if value == False:
-        print('Стяли метку HSK3')
+    if value == 2:
+        print('Поставил метку HSK3')
+        print(f'Должно быть 2. По факту: {form.checkBox_show_hsk3.checkState()}')
     else:
-        print('Поставили метку HSK3')
+        print('______Снял метку HSK3')
+        print(f'Должен быть 0. По факту: {form.checkBox_show_hsk3.checkState()}')
 
 
 def checkBox_start_show_hsk4_method(value):
-    if value == False:
-        print('Стяли метку HSK4')
+    if value == 2:
+        print('Поставил метку HSK4')
+        print(f'Должно быть 2. По факту: {form.checkBox_show_hsk4.checkState()}')
     else:
-        print('Поставили метку HSK4')
+        print('______Снял метку HSK4')
+        print(f'Должен быть 0. По факту: {form.checkBox_show_hsk4.checkState()}')
 
+# Конец прогона со списка конкретного HSK. Это тестирование работы checkBox'ов (потом удалить)
 
 def hieroglyphs():
     form.label_in_groupBox1.setText('我是')
