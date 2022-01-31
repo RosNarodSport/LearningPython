@@ -61,10 +61,9 @@ def get_my_number_for_start_hsk():
         pass
 
 
-# Отработка показа с управляемой задержкой speed
+# Отработка показа с управляемой задержкой speed. Прыгают цифры (не могу понять)
 def show_me_hieroglyphs():
     get_my_number_for_start_hsk()
-    set_time_at_start_metod_show_me_hieroglyphs = datetime.datetime.now().time()
     for i in range(0, len(start_hsk_show)):
         one_dictionary_entry = start_hsk_show[i]
         speed = increase_speed_show()
@@ -73,7 +72,7 @@ def show_me_hieroglyphs():
 
 def update(one_dictionary_entry, i):
     if i >= len(start_hsk_show):
-        label_status_text_show_is_done() # Не работает. Вместо этого стоит Идет показ...
+        label_status_text_show_is_done()
     else:
         pass
 
@@ -90,8 +89,8 @@ def update(one_dictionary_entry, i):
     form.progressBar.setMaximum(len(start_hsk_show))
     form.progressBar.setValue(i)
 
-    set_time_end = datetime.datetime.now().time()  # Котроль выхода статьи (удалить)
-    print(f'\n__________________Завершено: {set_time_end}')  # Котроль выхода статьи (удалить)
+    set_time_end = datetime.datetime.now()  # Котроль выхода статьи (удалить)
+    print(set_time_end)  # Котроль выхода статьи (удалить)
 
 
 # Отработка показа - не показа элемента словарной статьи по checkBox нажатию
