@@ -41,22 +41,34 @@ def label_status_text_show_is_done():
 def get_my_number_for_start_hsk():
     global start_hsk_show
     start_hsk_show_temporary = []
-    if form.checkBox_show_hsk1.isChecked():
-        start_hsk_show_temporary.extend(hsk1)
-        start_hsk_show = start_hsk_show_temporary
-        label_status_text_show_group()
+
+    if form.checkBox_show_hsk1.isChecked() == True:
+        # start_hsk_show_temporary.extend(hsk1)
+        # start_hsk_show = start_hsk_show_temporary
+        # label_status_text_show_group()
+
+        if form.checkBox_show_hsk2.isChecked() == True:
+            # start_hsk_show = []
+            start_hsk_show_temporary.extend(hsk1)
+            start_hsk_show_temporary.extend(hsk2)
+            start_hsk_show = start_hsk_show_temporary
+            label_status_text_show_group()
+        else:
+            start_hsk_show = []
+            label_status_text_no_group()
+
     else:
         start_hsk_show = []
         label_status_text_no_group()
 
-    return start_hsk_show
-
-    if form.checkBox_show_hsk2.isChecked() == True:
-        pass
+    # return start_hsk_show
 
 
+
+global start_hsk_show
+# Запилить сюда условие для работы двух checkBox!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 def get_my_number_for_start_hsk2():
-    global start_hsk_show
+
     start_hsk_show_temporary = []
     if form.checkBox_show_hsk2.isChecked() == True:
         start_hsk_show_temporary.extend(hsk2)
@@ -73,19 +85,18 @@ def get_my_number_for_start_hsk2():
     # if form.checkBox_show_hsk4.isChecked() == True:
     #     pass
 
+    # if form.checkBox_show_hsk1.isChecked() == True:
+    #     get_my_number_for_start_hsk()
+    #     print('HSK1\n_________________\n', start_hsk_show)
+    # elif form.checkBox_show_hsk2.isChecked() == True:
+    #     get_my_number_for_start_hsk2()
+    #     print('HSK2\n_________________\n', start_hsk_show)
+    # else:
+    #     label_status_text_no_group()
 
-# Отработка показа с управляемой задержкой speed. Прыгают цифры (не могу понять)
 def show_me_hieroglyphs():
-    if form.checkBox_show_hsk1.isChecked() == True:
-        get_my_number_for_start_hsk()
-        print('HSK1\n_________________\n', start_hsk_show)
-    elif form.checkBox_show_hsk2.isChecked() == True:
-        get_my_number_for_start_hsk2()
-        print('HSK2\n_________________\n', start_hsk_show)
-    else:
-        label_status_text_no_group()
-
-    # get_my_number_for_start_hsk()
+    get_my_number_for_start_hsk() # Поступил правильный лист для демонстрации
+    print(start_hsk_show, len(start_hsk_show))
     for i in range(0, len(start_hsk_show)):
         one_dictionary_entry = start_hsk_show[i]
         speed = increase_speed_show()
@@ -93,7 +104,7 @@ def show_me_hieroglyphs():
 
 
 def update(one_dictionary_entry, i):
-    if i >= len(start_hsk_show):
+    if i >= len(start_hsk_show)-1:
         label_status_text_show_is_done()
     else:
         pass
@@ -112,7 +123,8 @@ def update(one_dictionary_entry, i):
     form.progressBar.setValue(i)
 
     set_time_end = datetime.datetime.now()  # Котроль выхода статьи (удалить)
-    print(one_dictionary_entry[0], '-->', one_dictionary_entry[1], '-->', set_time_end)  # Котроль выхода статьи (удалить)
+    print('Итерация: ', i+1, ' - ', one_dictionary_entry[0], ' - ', (i+1)-(one_dictionary_entry[0]),
+          ' - ', one_dictionary_entry[1], ' - ', set_time_end, ' - ', int(datetime.datetime.now().timestamp()))  # Котроль выхода статьи (удалить)
 
 
 # Отработка показа - не показа элемента словарной статьи по checkBox нажатию
@@ -161,12 +173,13 @@ def increase_character_size():
 #     pass
 
 
-# Метод управляет изменением скорости показа иероглифа
+# Метод управляет изменением скорости показа иероглифа. Где-то здесь ошибка, искажающая вывод словарных статей
 def increase_speed_show():
     speed_value = form.horizontalSlider_speed.value()
     speed_value = int(speed_value)
-    form.label_for_horizontalSlider_speed.setText(f'{round(speed_value / 1000, 1)} сек')
+    form.label_for_horizontalSlider_speed.setText(f'{round(speed_value / 1000, 10)} сек')
     return speed_value
+
 
 
 # Запуск прогона со списка конкретного HSK. Это тестирование работы checkBox'ов (потом удалить)
