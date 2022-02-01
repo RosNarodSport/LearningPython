@@ -1,4 +1,4 @@
-from functools import partial
+from functools import *
 from hieroglyphs import *
 from hsk_selection_options import *
 
@@ -64,11 +64,11 @@ def get_my_number_for_start_hsk():
     # return start_hsk_show
 
 
-
 global start_hsk_show
+
+
 # Запилить сюда условие для работы двух checkBox!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 def get_my_number_for_start_hsk2():
-
     start_hsk_show_temporary = []
     if form.checkBox_show_hsk2.isChecked() == True:
         start_hsk_show_temporary.extend(hsk2)
@@ -94,21 +94,35 @@ def get_my_number_for_start_hsk2():
     # else:
     #     label_status_text_no_group()
 
+def pause_in_show():
+    pass
+
+
 def show_me_hieroglyphs():
-    get_my_number_for_start_hsk() # Поступил правильный лист для демонстрации
+    get_my_number_for_start_hsk()  # Поступил правильный лист для демонстрации
     print(start_hsk_show, len(start_hsk_show))
-    for i in range(0, len(start_hsk_show)):
+    # Временная заглушка 3. Не понимаю, почему она необходимо (где-то сбой)
+    new_point_for_show = int((len(start_hsk_show) * (show_new_start_point() / 100)+3))
+
+    for i in range(new_point_for_show, len(start_hsk_show)):
         one_dictionary_entry = start_hsk_show[i]
         speed = increase_speed_show()
-        QtCore.QTimer.singleShot(speed * i, partial(update, one_dictionary_entry, i))
+
+# Здесь я хочу отработать checkBox с паузой показа
+        if form.checkBox_set_pause.isChecked() == True: # Не выполняется проверка по ходу показа
+            print('Хрен вам. Останавливаюсь')
+        else:
+            progon = partial(update, one_dictionary_entry, i)
+            QtCore.QTimer.singleShot(speed * (i - new_point_for_show), progon)
+
 
 
 def update(one_dictionary_entry, i):
-    if i >= len(start_hsk_show)-1:
+
+    if i >= len(start_hsk_show) - 1:
         label_status_text_show_is_done()
     else:
         pass
-
     y = 0
     while y < len(one_dictionary_entry):
         form.label_number.setText(str(one_dictionary_entry[0]))
@@ -122,12 +136,13 @@ def update(one_dictionary_entry, i):
     form.progressBar.setMaximum(len(start_hsk_show))
     form.progressBar.setValue(i)
 
-    set_time_end = datetime.datetime.now()  # Котроль выхода статьи (удалить)
-    print('Итерация: ', i+1, ' - ', one_dictionary_entry[0], ' - ', (i+1)-(one_dictionary_entry[0]),
-          ' - ', one_dictionary_entry[1], ' - ', set_time_end, ' - ', int(datetime.datetime.now().timestamp()))  # Котроль выхода статьи (удалить)
+    set_time_end = datetime.datetime.now()  # Котроль выхода статьи (удалить тест)
+    print('Итерация: ', i + 1, ' - ', one_dictionary_entry[0], ' - ', (i + 1) - (one_dictionary_entry[0]),
+              ' - ', one_dictionary_entry[1], ' - ', set_time_end, ' - ',
+    int(datetime.datetime.now().timestamp()))  # Котроль выхода статьи (удалить)
 
 
-# Отработка показа - не показа элемента словарной статьи по checkBox нажатию
+# Отработка "показа - не показа" элемента словарной статьи по checkBox нажатию
 def checkbox_hieroglyph(value):
     form.label_hieroglyph.setText(str(value))  # Поставить в зависмиость от checkBox_show_hieroglyph
 
@@ -181,6 +196,14 @@ def increase_speed_show():
     return speed_value
 
 
+# Метод управляет выбором места начала показа словарной статьи.
+# Связь с label СТАТУС
+def show_new_start_point():
+    new_point_for_show = form.horizontalSlider_show_new_start_point.value()
+    new_point_for_show = int(new_point_for_show)
+    form.label_check_new_start_point.setText(f'-> {new_point_for_show + 1}')
+    return new_point_for_show
+
 
 # Запуск прогона со списка конкретного HSK. Это тестирование работы checkBox'ов (потом удалить)
 
@@ -218,6 +241,7 @@ def checkBox_start_show_hsk4_method(value):
     else:
         print('______Снял метку HSK4')
         print(f'Должен быть 0. По факту: {form.checkBox_show_hsk4.checkState()}')
+
 
 # Конец прогона со списка конкретного HSK. Это тестирование работы checkBox'ов (потом удалить)
 
@@ -282,5 +306,12 @@ form.checkBox_show_hsk1.stateChanged.connect(checkBox_start_show_hsk1_method)
 form.checkBox_show_hsk2.stateChanged.connect(checkBox_start_show_hsk2_method)
 form.checkBox_show_hsk3.stateChanged.connect(checkBox_start_show_hsk3_method)
 form.checkBox_show_hsk4.stateChanged.connect(checkBox_start_show_hsk4_method)
+
+# Управление точкой запуска просмотра
+form.horizontalSlider_show_new_start_point.valueChanged.connect(show_new_start_point)
+
+
+# Установить ПАУЗУ при показе словарных статей
+form.checkBox_set_pause.clicked.connect(pause_in_show)
 
 app.exec_()
