@@ -43,12 +43,23 @@ def get_my_number_for_start_hsk():
     start_hsk_show_temporary = []
 
     if form.checkBox_show_hsk1.isChecked() == True:
-
         if form.checkBox_show_hsk2.isChecked() == True:
-            start_hsk_show_temporary.extend(hsk1)
-            start_hsk_show_temporary.extend(hsk2)
-            start_hsk_show = start_hsk_show_temporary
-            label_status_text_show_group()
+            if form.checkBox_show_hsk3.isChecked() == True:
+                if form.checkBox_show_hsk4.isChecked() == True:
+                    start_hsk_show = []
+                    start_hsk_show_temporary.extend(hsk1)
+                    start_hsk_show_temporary.extend(hsk2)
+                    start_hsk_show_temporary.extend(hsk3)
+                    start_hsk_show_temporary.extend(hsk4)
+
+                    start_hsk_show = start_hsk_show_temporary  # Получили и отдали список hsk 1-2-3-4
+                    label_status_text_show_group()
+                else:
+                    start_hsk_show = []
+                    label_status_text_no_group()
+            else:
+                start_hsk_show = []
+                label_status_text_no_group()
         else:
             start_hsk_show = []
             label_status_text_no_group()
@@ -56,39 +67,101 @@ def get_my_number_for_start_hsk():
         start_hsk_show = []
         label_status_text_no_group()
 
-
-
-
-global start_hsk_show
-
-
-# Запилить сюда условие для работы двух checkBox!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-def get_my_number_for_start_hsk2():
-    start_hsk_show_temporary = []
-    if form.checkBox_show_hsk2.isChecked() == True:
-        start_hsk_show_temporary.extend(hsk2)
-        start_hsk_show = start_hsk_show_temporary
-        label_status_text_show_group()
-    else:
-        start_hsk_show = []
-        label_status_text_no_group()
-    return start_hsk_show
-
-    # if form.checkBox_show_hsk3.isChecked() == True:
-    #     pass
-    #
-    # if form.checkBox_show_hsk4.isChecked() == True:
-    #     pass
-
     # if form.checkBox_show_hsk1.isChecked() == True:
-    #     get_my_number_for_start_hsk()
-    #     print('HSK1\n_________________\n', start_hsk_show)
-    # elif form.checkBox_show_hsk2.isChecked() == True:
-    #     get_my_number_for_start_hsk2()
-    #     print('HSK2\n_________________\n', start_hsk_show)
+    #     if form.checkBox_show_hsk2.isChecked() == True:
+    #         if form.checkBox_show_hsk3.isChecked() == True:
+    #             if form.checkBox_show_hsk4.isChecked() == False:
+    #                 start_hsk_show = []
+    #                 start_hsk_show_temporary.extend(hsk1)
+    #                 start_hsk_show_temporary.extend(hsk2)
+    #                 start_hsk_show_temporary.extend(hsk3)
+    #
+    #                 start_hsk_show = start_hsk_show_temporary  # Получили и отдали список hsk 1-2-3
+    #                 label_status_text_show_group()
+    #             else:
+    #                 start_hsk_show = []
+    #                 label_status_text_no_group()
+    #         else:
+    #             start_hsk_show = []
+    #             label_status_text_no_group()
+    #     else:
+    #         start_hsk_show = []
+    #         label_status_text_no_group()
     # else:
+    #     start_hsk_show = []
     #     label_status_text_no_group()
-
+    #
+    # if form.checkBox_show_hsk1.isChecked() == True:
+    #     if form.checkBox_show_hsk2.isChecked() == True:
+    #         if form.checkBox_show_hsk4.isChecked() == True:
+    #             if form.checkBox_show_hsk3.isChecked() == False:
+    #                 start_hsk_show = []
+    #                 start_hsk_show_temporary.extend(hsk1)
+    #                 start_hsk_show_temporary.extend(hsk2)
+    #                 start_hsk_show_temporary.extend(hsk4)
+    #
+    #                 start_hsk_show = start_hsk_show_temporary  # Получили и отдали список hsk 1-2-4
+    #                 label_status_text_show_group()
+    #             else:
+    #                 start_hsk_show = []
+    #                 label_status_text_no_group()
+    #         else:
+    #             start_hsk_show = []
+    #             label_status_text_no_group()
+    #     else:
+    #         start_hsk_show = []
+    #         label_status_text_no_group()
+    # else:
+    #     start_hsk_show = []
+    #     label_status_text_no_group()
+    #
+    # if form.checkBox_show_hsk1.isChecked() == True:
+    #     if form.checkBox_show_hsk3.isChecked() == True:
+    #         if form.checkBox_show_hsk4.isChecked() == True:
+    #             if form.checkBox_show_hsk2.isChecked() == False:
+    #                 start_hsk_show = []
+    #                 start_hsk_show_temporary.extend(hsk1)
+    #                 start_hsk_show_temporary.extend(hsk3)
+    #                 start_hsk_show_temporary.extend(hsk4)
+    #
+    #                 start_hsk_show = start_hsk_show_temporary  # Получили и отдали список hsk 1-3-4
+    #                 label_status_text_show_group()
+    #             else:
+    #                 start_hsk_show = []
+    #                 label_status_text_no_group()
+    #         else:
+    #             start_hsk_show = []
+    #             label_status_text_no_group()
+    #     else:
+    #         start_hsk_show = []
+    #         label_status_text_no_group()
+    # else:
+    #     start_hsk_show = []
+    #     label_status_text_no_group()
+    #
+    # if form.checkBox_show_hsk2.isChecked() == True:
+    #     if form.checkBox_show_hsk3.isChecked() == True:
+    #         if form.checkBox_show_hsk4.isChecked() == True:
+    #             if form.checkBox_show_hsk1.isChecked() == False:
+    #                 start_hsk_show = []
+    #                 start_hsk_show_temporary.extend(hsk2)
+    #                 start_hsk_show_temporary.extend(hsk3)
+    #                 start_hsk_show_temporary.extend(hsk4)
+    #
+    #                 start_hsk_show = start_hsk_show_temporary  # Получили и отдали список hsk 2-3-4
+    #                 label_status_text_show_group()
+    #             else:
+    #                 start_hsk_show = []
+    #                 label_status_text_no_group()
+    #         else:
+    #             start_hsk_show = []
+    #             label_status_text_no_group()
+    #     else:
+    #         start_hsk_show = []
+    #         label_status_text_no_group()
+    # else:
+    #     start_hsk_show = []
+    #     label_status_text_no_group()
 
 def stop_showing():
     if form.radioButton_stop_showing.isChecked():
@@ -109,9 +182,10 @@ def show_me_hieroglyphs():
     # приводит к смешению показов словарных статей
 
     get_my_number_for_start_hsk()  # Поступил правильный лист для демонстрации
-    print(start_hsk_show, len(start_hsk_show))
-    # Временная заглушка 3. Не понимаю, почему она необходимо (где-то сбой)
-    new_point_for_show = int((len(start_hsk_show) * (show_new_start_point() / 100) + 3))
+    print(len(start_hsk_show), start_hsk_show)
+    # Временная заглушка 11. Не понимаю, почему она необходимо (где-то сбой)
+    # Связь м.б. в формировании списков HSK в методе get_my_number_for_start_hsk()
+    new_point_for_show = int((len(start_hsk_show) * (show_new_start_point() / 100) + 12))
 
     for i in range(new_point_for_show, len(start_hsk_show)):
         one_dictionary_entry = start_hsk_show[i]
@@ -194,37 +268,29 @@ def show_new_start_point():
 def checkBox_start_show_hsk1_method(value):
     if value == 2:
         print('Поставил метку HSK1')
-        print(f'Должно быть 2. По факту: {form.checkBox_show_hsk1.checkState()}')
     else:
         print('______Снял метку HSK1')
-        print(f'Должен быть 0. По факту: {form.checkBox_show_hsk1.checkState()}')
 
 
 def checkBox_start_show_hsk2_method(value):
     if value == 2:
         print('Поставил метку HSK2')
-        print(f'Должно быть 2. По факту: {form.checkBox_show_hsk2.checkState()}')
     else:
         print('______Снял метку HSK2')
-        print(f'Должен быть 0. По факту: {form.checkBox_show_hsk2.checkState()}')
 
 
 def checkBox_start_show_hsk3_method(value):
     if value == 2:
         print('Поставил метку HSK3')
-        print(f'Должно быть 2. По факту: {form.checkBox_show_hsk3.checkState()}')
     else:
         print('______Снял метку HSK3')
-        print(f'Должен быть 0. По факту: {form.checkBox_show_hsk3.checkState()}')
 
 
 def checkBox_start_show_hsk4_method(value):
     if value == 2:
         print('Поставил метку HSK4')
-        print(f'Должно быть 2. По факту: {form.checkBox_show_hsk4.checkState()}')
     else:
         print('______Снял метку HSK4')
-        print(f'Должен быть 0. По факту: {form.checkBox_show_hsk4.checkState()}')
 
 
 # Конец прогона со списка конкретного HSK. Это тестирование работы checkBox'ов (потом удалить)
