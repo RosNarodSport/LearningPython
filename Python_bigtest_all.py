@@ -43,12 +43,8 @@ def get_my_number_for_start_hsk():
     start_hsk_show_temporary = []
 
     if form.checkBox_show_hsk1.isChecked() == True:
-        # start_hsk_show_temporary.extend(hsk1)
-        # start_hsk_show = start_hsk_show_temporary
-        # label_status_text_show_group()
 
         if form.checkBox_show_hsk2.isChecked() == True:
-            # start_hsk_show = []
             start_hsk_show_temporary.extend(hsk1)
             start_hsk_show_temporary.extend(hsk2)
             start_hsk_show = start_hsk_show_temporary
@@ -56,12 +52,11 @@ def get_my_number_for_start_hsk():
         else:
             start_hsk_show = []
             label_status_text_no_group()
-
     else:
         start_hsk_show = []
         label_status_text_no_group()
 
-    # return start_hsk_show
+
 
 
 global start_hsk_show
@@ -94,31 +89,37 @@ def get_my_number_for_start_hsk2():
     # else:
     #     label_status_text_no_group()
 
-def pause_in_show():
-    pass
+
+def stop_showing():
+    if form.radioButton_stop_showing.isChecked():
+        print('СТОП показ! radioButton_stop_showing')
+    else:
+        print('Не сработала метка radioButton_stop_showing')
+
+
+def start_showing():
+    if form.radioButton_start_showing.isChecked():
+        print('НАЧНИ показ! radioButton_start_showing')
+    else:
+        print('Нес работала метка radioButton_start_showing')
 
 
 def show_me_hieroglyphs():
+    # Тут проверка нужна, иначе повторное нажатие на кнопку СТАРТ
+    # приводит к смешению показов словарных статей
+
     get_my_number_for_start_hsk()  # Поступил правильный лист для демонстрации
     print(start_hsk_show, len(start_hsk_show))
     # Временная заглушка 3. Не понимаю, почему она необходимо (где-то сбой)
-    new_point_for_show = int((len(start_hsk_show) * (show_new_start_point() / 100)+3))
+    new_point_for_show = int((len(start_hsk_show) * (show_new_start_point() / 100) + 3))
 
     for i in range(new_point_for_show, len(start_hsk_show)):
         one_dictionary_entry = start_hsk_show[i]
         speed = increase_speed_show()
-
-# Здесь я хочу отработать checkBox с паузой показа
-        if form.checkBox_set_pause.isChecked() == True: # Не выполняется проверка по ходу показа
-            print('Хрен вам. Останавливаюсь')
-        else:
-            progon = partial(update, one_dictionary_entry, i)
-            QtCore.QTimer.singleShot(speed * (i - new_point_for_show), progon)
-
+        QtCore.QTimer.singleShot(speed * (i - new_point_for_show), partial(update, one_dictionary_entry, i))
 
 
 def update(one_dictionary_entry, i):
-
     if i >= len(start_hsk_show) - 1:
         label_status_text_show_is_done()
     else:
@@ -138,28 +139,13 @@ def update(one_dictionary_entry, i):
 
     set_time_end = datetime.datetime.now()  # Котроль выхода статьи (удалить тест)
     print('Итерация: ', i + 1, ' - ', one_dictionary_entry[0], ' - ', (i + 1) - (one_dictionary_entry[0]),
-              ' - ', one_dictionary_entry[1], ' - ', set_time_end, ' - ',
-    int(datetime.datetime.now().timestamp()))  # Котроль выхода статьи (удалить)
+          ' - ', one_dictionary_entry[1], ' - ', set_time_end, ' - ',
+          int(datetime.datetime.now().timestamp()))  # Котроль выхода статьи (удалить)
 
 
 # Отработка "показа - не показа" элемента словарной статьи по checkBox нажатию
 def checkbox_hieroglyph(value):
     form.label_hieroglyph.setText(str(value))  # Поставить в зависмиость от checkBox_show_hieroglyph
-
-
-# Откат к начальным настройкам
-def on_click_setBack():
-    form.label_for_horizontalSlider_size.setText('1')
-    form.horizontalSlider_size.setProperty("value", 12)
-
-    form.label_hieroglyph.setFont(QFont('Arial', 12))
-
-    form.label_for_spinBox.setText('1')
-    form.progressBar.setProperty("value", 1)
-    form.spinBox.setProperty("value", 1)
-    form.dateEdit.setDateTime(QtCore.QDateTime(QDate.currentDate()))
-    form.label_for_horizontalSlider_speed.setText('Задержка показа: 2.5 сек.')
-    form.horizontalSlider_speed.setProperty("value", 2500)
 
 
 def on_click():  # Проверка. Удалить
@@ -172,10 +158,8 @@ def on_click_replace():  # Проверка. Удалить
 
 def horizontalSlider_size_Value():
     zzz = form.horizontalSlider_size.value()
-    form.label_for_horizontalSlider_size.setText(str(zzz))
 
     if zzz > 6 and zzz < 50:
-        form.label_for_horizontalSlider_size.setFont(QFont('Arial', zzz))
         form.label_hieroglyph.setFont(QFont('Arial', zzz))
 
 
@@ -280,9 +264,6 @@ def checkBox_show_translation_method(value):
         print('  Показать ПЕРЕВОД')
 
 
-# Кнопка возврата к исходдным настройкам
-form.pushButton_setBack.clicked.connect(on_click_setBack)
-
 form.spinBox.valueChanged.connect(increase_character_size)
 # form.dateEdit.dateTimeChanged.connect(dateEdit_use)
 
@@ -310,8 +291,8 @@ form.checkBox_show_hsk4.stateChanged.connect(checkBox_start_show_hsk4_method)
 # Управление точкой запуска просмотра
 form.horizontalSlider_show_new_start_point.valueChanged.connect(show_new_start_point)
 
-
-# Установить ПАУЗУ при показе словарных статей
-form.checkBox_set_pause.clicked.connect(pause_in_show)
+# Управление паузой и снятием с паузы
+form.radioButton_start_showing.clicked.connect(start_showing)
+form.radioButton_stop_showing.clicked.connect(stop_showing)
 
 app.exec_()
