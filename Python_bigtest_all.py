@@ -166,6 +166,32 @@ def get_my_number_for_start_hsk():
     #     label_status_text_no_group()
 
 
+def show_me_hieroglyphs():
+    # Тут проверка нужна, иначе повторное нажатие на кнопку СТАРТ
+    # приводит к смешению показов словарных статей
+
+    get_my_number_for_start_hsk()  # Поступил правильный лист для демонстрации
+    print(len(start_hsk_show), start_hsk_show)
+    # Временная заглушка 11. Не понимаю, почему она необходимо (где-то сбой)
+    # Связь м.б. в формировании списков HSK в методе get_my_number_for_start_hsk()
+    # 12 - при списке в 1200 статей - это связь
+    new_point_for_show = int((len(start_hsk_show) * (show_new_start_point() / 100) + 12))
+
+    # Это мой главный триггер показа словарных статей. Здесь надо внедрить метод ПАУЗА/СТАРТ
+    i = new_point_for_show
+    while i < len(start_hsk_show):
+        if form.radioButton_stop_showing.isChecked() == False: # НЕ ОТРАБОТАНО ПОКА
+            if form.radioButton_start_showing.isChecked() == True:
+                one_dictionary_entry = start_hsk_show[i]
+                speed = increase_speed_show()
+                p = i
+                new_funk = update
+                QtCore.QTimer.singleShot(speed * (i - new_point_for_show), partial(new_funk, one_dictionary_entry, p))
+                i += 1
+            else:
+                print(f'ПАУЗА. Итерация: {i}')
+                continue
+
 def stop_showing():
     if form.radioButton_stop_showing.isChecked():
         print('СТОП показ! radioButton_stop_showing')
@@ -178,33 +204,6 @@ def start_showing():
         print('НАЧНИ показ! radioButton_start_showing')
     else:
         print('Нес работала метка radioButton_start_showing')
-
-
-def show_me_hieroglyphs():
-    # Тут проверка нужна, иначе повторное нажатие на кнопку СТАРТ
-    # приводит к смешению показов словарных статей
-
-    get_my_number_for_start_hsk()  # Поступил правильный лист для демонстрации
-    print(len(start_hsk_show), start_hsk_show)
-    # Временная заглушка 11. Не понимаю, почему она необходимо (где-то сбой)
-    # Связь м.б. в формировании списков HSK в методе get_my_number_for_start_hsk()
-    # 12 - при списке в 1200 статей - это связь
-    new_point_for_show = int((len(start_hsk_show) * (show_new_start_point() / 100) + 12))
-
-    for i in range(new_point_for_show, len(start_hsk_show)):
-        one_dictionary_entry = start_hsk_show[i]
-        speed = increase_speed_show()
-        QtCore.QTimer.singleShot(speed * (i - new_point_for_show), partial(update, one_dictionary_entry, i))
-
-
-def sound():
-    filename = 'sound.mp3'
-    fullpath = QtCore.QDir.current().absoluteFilePath(filename)
-    url = QtCore.QUrl.fromLocalFile(fullpath)
-    content = QtMultimedia.QMediaContent(url)
-    player = QtMultimedia.QMediaPlayer()
-    player.setMedia(content)
-    player.play()
 
 
 # Смена цвета словарной статьи
@@ -270,14 +269,9 @@ def increase_character_size():
     form.label_hieroglyph.setFont(QFont('Arial', aaa))
 
 
-# def dateEdit_use():  # Проверка. Удалить
-#     pass
-
-
 # Метод управляет изменением скорости показа иероглифа. Где-то здесь ошибка, искажающая вывод словарных статей
 def increase_speed_show():
     speed_value = form.horizontalSlider_speed.value()
-    # speed_value = int(speed_value)
     form.label_for_horizontalSlider_speed.setText(f'{round(speed_value / 1000, 2)} сек')
     return speed_value
 
@@ -289,39 +283,6 @@ def show_new_start_point():
     new_point_for_show = int(new_point_for_show)
     form.label_check_new_start_point.setText(f'-> {new_point_for_show + 1}')
     return new_point_for_show
-
-
-# Запуск прогона со списка конкретного HSK. Это тестирование работы checkBox'ов (потом удалить)
-
-def checkBox_start_show_hsk1_method(value):
-    if value == 2:
-        print('Поставил метку HSK1')
-    else:
-        print('______Снял метку HSK1')
-
-
-def checkBox_start_show_hsk2_method(value):
-    if value == 2:
-        print('Поставил метку HSK2')
-    else:
-        print('______Снял метку HSK2')
-
-
-def checkBox_start_show_hsk3_method(value):
-    if value == 2:
-        print('Поставил метку HSK3')
-    else:
-        print('______Снял метку HSK3')
-
-
-def checkBox_start_show_hsk4_method(value):
-    if value == 2:
-        print('Поставил метку HSK4')
-    else:
-        print('______Снял метку HSK4')
-
-
-# Конец прогона со списка конкретного HSK. Это тестирование работы checkBox'ов (потом удалить)
 
 def hieroglyphs():
     form.label_in_groupBox1.setText('我是')
@@ -375,12 +336,6 @@ form.checkBox_show_hieroglyph.stateChanged.connect(checkBox_show_hieroglyph_meth
 form.checkBox_show_pinin.stateChanged.connect(checkBox_show_pinin_method)
 form.checkBox_show_pfrase.stateChanged.connect(checkBox_show_pfrase_method)
 form.checkBox_show_translation.stateChanged.connect(checkBox_show_translation_method)
-
-# Управление запуском показа словарных статей с конкретной группы HSK
-form.checkBox_show_hsk1.stateChanged.connect(checkBox_start_show_hsk1_method)
-form.checkBox_show_hsk2.stateChanged.connect(checkBox_start_show_hsk2_method)
-form.checkBox_show_hsk3.stateChanged.connect(checkBox_start_show_hsk3_method)
-form.checkBox_show_hsk4.stateChanged.connect(checkBox_start_show_hsk4_method)
 
 # Управление точкой запуска просмотра
 form.horizontalSlider_show_new_start_point.valueChanged.connect(show_new_start_point)
