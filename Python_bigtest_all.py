@@ -185,6 +185,7 @@ def show_me_hieroglyphs():
     print(len(start_hsk_show), start_hsk_show)
     # Временная заглушка 11. Не понимаю, почему она необходимо (где-то сбой)
     # Связь м.б. в формировании списков HSK в методе get_my_number_for_start_hsk()
+    # 12 - при списке в 1200 статей - это связь
     new_point_for_show = int((len(start_hsk_show) * (show_new_start_point() / 100) + 12))
 
     for i in range(new_point_for_show, len(start_hsk_show)):
@@ -201,7 +202,7 @@ def update(one_dictionary_entry, i):
     y = 0
     while y < len(one_dictionary_entry):
         form.label_number.setText(str(one_dictionary_entry[0]))
-        checkbox_hieroglyph(str(one_dictionary_entry[1]))
+        form.label_hieroglyph.setText(str(one_dictionary_entry[1]))
         form.label_pinin.setText(str(one_dictionary_entry[2]))
         form.label_translation.setText(str(one_dictionary_entry[3]))
         form.label_phrase.setText(str(one_dictionary_entry[4]))
@@ -249,8 +250,8 @@ def increase_character_size():
 # Метод управляет изменением скорости показа иероглифа. Где-то здесь ошибка, искажающая вывод словарных статей
 def increase_speed_show():
     speed_value = form.horizontalSlider_speed.value()
-    speed_value = int(speed_value)
-    form.label_for_horizontalSlider_speed.setText(f'{round(speed_value / 1000, 10)} сек')
+    # speed_value = int(speed_value)
+    form.label_for_horizontalSlider_speed.setText(f'{round(speed_value / 1000, 2)} сек')
     return speed_value
 
 
@@ -360,5 +361,42 @@ form.horizontalSlider_show_new_start_point.valueChanged.connect(show_new_start_p
 # Управление паузой и снятием с паузы
 form.radioButton_start_showing.clicked.connect(start_showing)
 form.radioButton_stop_showing.clicked.connect(stop_showing)
+
+def new_color():
+    if form.radioButton_black.isChecked():
+        form.label_hieroglyph.setText("<span style='color: #000;'>Иероглиф</span>")
+        form.label_pinin.setText("<span style='color: #000;'>Пиньин</span>")
+        form.label_translation.setText("<span style='color: #000;'>Перевод</span>")
+        form.label_phrase.setText("<span style='color: #000;'>Фраза</span>")
+        print('Черный')
+
+    if form.radioButton_green.isChecked():
+        form.label_hieroglyph.setText("<span style='color: #008000;'>Иероглиф</span>")
+        form.label_pinin.setText("<span style='color: #008000;'>Пиньин</span>")
+        form.label_translation.setText("<span style='color: #008000;'>Перевод</span>")
+        form.label_phrase.setText("<span style='color: #008000;'>Фраза</span>")
+        print('Зеленый')
+
+    if form.radioButton_blue.isChecked():
+        print('Синий')
+        form.label_hieroglyph.setText("<span style='color: #0000ff;'>Иероглиф</span>")
+        form.label_pinin.setText("<span style='color: #0000ff;'>Пиньин</span>")
+        form.label_translation.setText("<span style='color: #0000ff;'>Перевод</span>")
+        form.label_phrase.setText("<span style='color: #0000ff;'>Фраза</span>")
+
+    if form.radioButton_red.isChecked():
+        form.label_hieroglyph.setText("<span style='color: #f00;'>Иероглиф</span>")
+        form.label_pinin.setText("<span style='color: #f00;'>Пиньин</span>")
+        form.label_translation.setText("<span style='color: #f00;'>Перевод</span>")
+        form.label_phrase.setText("<span style='color: #f00;'>Фраза</span>")
+        print('Красный')
+
+
+# Управление цветом показа словарных статей. Задача: Вставить в показ
+form.radioButton_black.clicked.connect(new_color)
+form.radioButton_green.clicked.connect(new_color)
+form.radioButton_blue.clicked.connect(new_color)
+form.radioButton_red.clicked.connect(new_color)
+
 
 app.exec_()
