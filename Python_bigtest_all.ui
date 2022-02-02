@@ -42,7 +42,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -52,7 +52,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>210</y>
+        <y>280</y>
         <width>351</width>
         <height>121</height>
        </rect>
@@ -80,7 +80,7 @@
         <x>0</x>
         <y>10</y>
         <width>20</width>
-        <height>321</height>
+        <height>391</height>
        </rect>
       </property>
       <property name="orientation">
@@ -91,7 +91,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>120</y>
+        <y>140</y>
         <width>351</width>
         <height>21</height>
        </rect>
@@ -111,8 +111,8 @@
      <widget class="QLabel" name="label_number">
       <property name="geometry">
        <rect>
-        <x>370</x>
-        <y>140</y>
+        <x>420</x>
+        <y>100</y>
         <width>31</width>
         <height>31</height>
        </rect>
@@ -127,7 +127,7 @@
         <x>350</x>
         <y>10</y>
         <width>20</width>
-        <height>321</height>
+        <height>391</height>
        </rect>
       </property>
       <property name="orientation">
@@ -140,7 +140,7 @@
         <x>10</x>
         <y>10</y>
         <width>351</width>
-        <height>101</height>
+        <height>131</height>
        </rect>
       </property>
       <property name="baseSize">
@@ -177,8 +177,8 @@
      <widget class="QLabel" name="label_HSK">
       <property name="geometry">
        <rect>
-        <x>420</x>
-        <y>140</y>
+        <x>370</x>
+        <y>100</y>
         <width>41</width>
         <height>31</height>
        </rect>
@@ -191,7 +191,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>150</y>
+        <y>210</y>
         <width>351</width>
         <height>61</height>
        </rect>
@@ -217,9 +217,9 @@
      <widget class="QProgressBar" name="progressBar">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>340</y>
-        <width>341</width>
+        <x>370</x>
+        <y>140</y>
+        <width>201</width>
         <height>21</height>
        </rect>
       </property>
@@ -260,7 +260,7 @@
       <property name="geometry">
        <rect>
         <x>370</x>
-        <y>110</y>
+        <y>70</y>
         <width>201</width>
         <height>31</height>
        </rect>
@@ -275,10 +275,10 @@
      <widget class="QSlider" name="horizontalSlider_show_new_start_point">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>380</y>
-        <width>301</width>
-        <height>16</height>
+        <x>370</x>
+        <y>170</y>
+        <width>191</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="minimum">
@@ -297,14 +297,15 @@
      <widget class="QLabel" name="label_show_new_start_point">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>390</y>
-        <width>301</width>
-        <height>16</height>
+        <x>370</x>
+        <y>190</y>
+        <width>181</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
-       <string>Указать точку для начала показа словарных статей</string>
+       <string>Указать точку для начала
+показа словарных статей</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -314,10 +315,15 @@
       <property name="geometry">
        <rect>
         <x>370</x>
-        <y>90</y>
+        <y>50</y>
         <width>191</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Информация</string>
@@ -329,40 +335,64 @@
      <widget class="QLabel" name="label_check_new_start_point">
       <property name="geometry">
        <rect>
-        <x>330</x>
-        <y>370</y>
-        <width>41</width>
+        <x>540</x>
+        <y>190</y>
+        <width>31</width>
         <height>31</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>#</string>
       </property>
      </widget>
-     <widget class="QDialogButtonBox" name="buttonBox">
+     <widget class="QLabel" name="label_5">
       <property name="geometry">
        <rect>
-        <x>390</x>
-        <y>260</y>
-        <width>156</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="standardButtons">
-       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="checkBox_set_pause">
-      <property name="geometry">
-       <rect>
-        <x>379</x>
-        <y>60</y>
-        <width>71</width>
+        <x>370</x>
+        <y>340</y>
+        <width>191</width>
         <height>20</height>
        </rect>
       </property>
       <property name="text">
-       <string>Пауза</string>
+       <string>Приостановить/запустить  работу</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_stop_showing">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>370</y>
+        <width>82</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Стоп</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_start_showing">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>370</y>
+        <width>82</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Пуск</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -685,20 +715,6 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_setBack">
-      <property name="geometry">
-       <rect>
-        <x>400</x>
-        <y>360</y>
-        <width>161</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Вернуть назад
-исходные настройки</string>
-      </property>
-     </widget>
      <widget class="QSpinBox" name="spinBox">
       <property name="geometry">
        <rect>
@@ -752,20 +768,6 @@
        <enum>Qt::Vertical</enum>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_save_settings">
-      <property name="geometry">
-       <rect>
-        <x>230</x>
-        <y>360</y>
-        <width>161</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Сохранить
-настройки</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
@@ -787,7 +789,7 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QRadioButton" name="radioButton">
+     <widget class="QRadioButton" name="radioButton_black">
       <property name="geometry">
        <rect>
         <x>420</x>
@@ -799,8 +801,11 @@
       <property name="text">
        <string>Черный цвет</string>
       </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
      </widget>
-     <widget class="QRadioButton" name="radioButton_2">
+     <widget class="QRadioButton" name="radioButton_green">
       <property name="geometry">
        <rect>
         <x>420</x>
@@ -813,7 +818,7 @@
        <string>Зеленый цвет</string>
       </property>
      </widget>
-     <widget class="QRadioButton" name="radioButton_3">
+     <widget class="QRadioButton" name="radioButton_blue">
       <property name="geometry">
        <rect>
         <x>420</x>
@@ -852,7 +857,7 @@
        <enum>Qt::Vertical</enum>
       </property>
      </widget>
-     <widget class="QRadioButton" name="radioButton_4">
+     <widget class="QRadioButton" name="radioButton_red">
       <property name="geometry">
        <rect>
         <x>420</x>
