@@ -69,6 +69,7 @@ def get_my_number_for_start_hsk():
         start_hsk_show = []
         label_status_text_no_group()
 
+
     # if form.checkBox_show_hsk1.isChecked() == True:
     #     if form.checkBox_show_hsk2.isChecked() == True:
     #         if form.checkBox_show_hsk3.isChecked() == True:
@@ -187,7 +188,7 @@ def show_me_hieroglyphs():
         new_funk = update
         QtCore.QTimer.singleShot(speed * (i - new_point_for_show), partial(new_funk, one_dictionary_entry, p))
         i += 1
-        form.label_status_pause.setText('...')
+
 
 
 def stop_showing():
@@ -285,6 +286,7 @@ def horizontalSlider_size_Value():
 
     if zzz > 6 and zzz < 50:
         form.label_hieroglyph.setFont(QFont('Arial', zzz))
+        form.label_for_horizontalSlider_size.setFont(QFont('Arial', zzz))
 
 
 def increase_character_size():
@@ -306,6 +308,7 @@ def show_new_start_point():
     new_point_for_show = int(new_point_for_show)
     form.label_check_new_start_point.setText(f'-> {new_point_for_show + 1}')
     return new_point_for_show
+
 
 def hieroglyphs():
     form.label_in_groupBox1.setText('我是')
