@@ -1,8 +1,10 @@
 from functools import *
+
+import media_sound
 from hieroglyphs import *
 from hsk_selection_options import *
 
-from PyQt5 import QtCore, Qt, QtGui
+from PyQt5 import QtCore, Qt, QtGui, QtMultimedia
 from PyQt5 import uic
 from PyQt5.QtCore import QDate
 from PyQt5.QtGui import QFont
@@ -163,6 +165,7 @@ def get_my_number_for_start_hsk():
     #     start_hsk_show = []
     #     label_status_text_no_group()
 
+
 def stop_showing():
     if form.radioButton_stop_showing.isChecked():
         print('СТОП показ! radioButton_stop_showing')
@@ -194,19 +197,43 @@ def show_me_hieroglyphs():
         QtCore.QTimer.singleShot(speed * (i - new_point_for_show), partial(update, one_dictionary_entry, i))
 
 
+def sound():
+    filename = 'sound.mp3'
+    fullpath = QtCore.QDir.current().absoluteFilePath(filename)
+    url = QtCore.QUrl.fromLocalFile(fullpath)
+    content = QtMultimedia.QMediaContent(url)
+    player = QtMultimedia.QMediaPlayer()
+    player.setMedia(content)
+    player.play()
+
+
+# Смена цвета словарной статьи
+def new_color():
+    if form.radioButton_black.isChecked():
+        set_new_color = '#000;'
+    if form.radioButton_green.isChecked():
+        set_new_color = '#008000;'
+    if form.radioButton_blue.isChecked():
+        set_new_color = '#0000ff;'
+    if form.radioButton_red.isChecked():
+        set_new_color = '#f00;'
+    return set_new_color
+
+
 def update(one_dictionary_entry, i):
     if i >= len(start_hsk_show) - 1:
         label_status_text_show_is_done()
     else:
         pass
     y = 0
+    set_new_color = 1
     while y < len(one_dictionary_entry):
         form.label_number.setText(str(one_dictionary_entry[0]))
-        form.label_hieroglyph.setText(str(one_dictionary_entry[1]))
-        form.label_pinin.setText(str(one_dictionary_entry[2]))
-        form.label_translation.setText(str(one_dictionary_entry[3]))
-        form.label_phrase.setText(str(one_dictionary_entry[4]))
-        form.label_HSK.setText(str(one_dictionary_entry[5]))
+        form.label_hieroglyph.setText(f"<span style='color: {new_color()}'>{str(one_dictionary_entry[1])}</span>")
+        form.label_pinin.setText(f"<span style='color: {new_color()}'>{str(one_dictionary_entry[2])}</span>")
+        form.label_translation.setText(f"<span style='color: {new_color()}'>{str(one_dictionary_entry[3])}</span>")
+        form.label_phrase.setText(f"<span style='color: {new_color()}'>{str(one_dictionary_entry[4])}</span>")
+        form.label_HSK.setText(f"<span style='color: {new_color()}'>{str(one_dictionary_entry[5])}</span>")
         y += 1
 
     form.progressBar.setMaximum(len(start_hsk_show))
@@ -362,41 +389,13 @@ form.horizontalSlider_show_new_start_point.valueChanged.connect(show_new_start_p
 form.radioButton_start_showing.clicked.connect(start_showing)
 form.radioButton_stop_showing.clicked.connect(stop_showing)
 
-def new_color():
-    if form.radioButton_black.isChecked():
-        form.label_hieroglyph.setText("<span style='color: #000;'>Иероглиф</span>")
-        form.label_pinin.setText("<span style='color: #000;'>Пиньин</span>")
-        form.label_translation.setText("<span style='color: #000;'>Перевод</span>")
-        form.label_phrase.setText("<span style='color: #000;'>Фраза</span>")
-        print('Черный')
-
-    if form.radioButton_green.isChecked():
-        form.label_hieroglyph.setText("<span style='color: #008000;'>Иероглиф</span>")
-        form.label_pinin.setText("<span style='color: #008000;'>Пиньин</span>")
-        form.label_translation.setText("<span style='color: #008000;'>Перевод</span>")
-        form.label_phrase.setText("<span style='color: #008000;'>Фраза</span>")
-        print('Зеленый')
-
-    if form.radioButton_blue.isChecked():
-        print('Синий')
-        form.label_hieroglyph.setText("<span style='color: #0000ff;'>Иероглиф</span>")
-        form.label_pinin.setText("<span style='color: #0000ff;'>Пиньин</span>")
-        form.label_translation.setText("<span style='color: #0000ff;'>Перевод</span>")
-        form.label_phrase.setText("<span style='color: #0000ff;'>Фраза</span>")
-
-    if form.radioButton_red.isChecked():
-        form.label_hieroglyph.setText("<span style='color: #f00;'>Иероглиф</span>")
-        form.label_pinin.setText("<span style='color: #f00;'>Пиньин</span>")
-        form.label_translation.setText("<span style='color: #f00;'>Перевод</span>")
-        form.label_phrase.setText("<span style='color: #f00;'>Фраза</span>")
-        print('Красный')
-
-
 # Управление цветом показа словарных статей. Задача: Вставить в показ
 form.radioButton_black.clicked.connect(new_color)
 form.radioButton_green.clicked.connect(new_color)
 form.radioButton_blue.clicked.connect(new_color)
 form.radioButton_red.clicked.connect(new_color)
 
+# Проверка работы кнопки с выводом звука
+# form.pushButton_sound.clicked.connect(media_sound)
 
 app.exec_()
