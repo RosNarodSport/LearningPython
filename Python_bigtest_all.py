@@ -178,19 +178,17 @@ def show_me_hieroglyphs():
     new_point_for_show = int((len(start_hsk_show) * (show_new_start_point() / 100) + 12))
 
     # Это мой главный триггер показа словарных статей. Здесь надо внедрить метод ПАУЗА/СТАРТ
+
     i = new_point_for_show
     while i < len(start_hsk_show):
-        if form.radioButton_stop_showing.isChecked() == False: # НЕ ОТРАБОТАНО ПОКА
-            if form.radioButton_start_showing.isChecked() == True:
-                one_dictionary_entry = start_hsk_show[i]
-                speed = increase_speed_show()
-                p = i
-                new_funk = update
-                QtCore.QTimer.singleShot(speed * (i - new_point_for_show), partial(new_funk, one_dictionary_entry, p))
-                i += 1
-            else:
-                print(f'ПАУЗА. Итерация: {i}')
-                continue
+        one_dictionary_entry = start_hsk_show[i]
+        speed = increase_speed_show()
+        p = i
+        new_funk = update
+        QtCore.QTimer.singleShot(speed * (i - new_point_for_show), partial(new_funk, one_dictionary_entry, p))
+        i += 1
+        form.label_status_pause.setText('...')
+
 
 def stop_showing():
     if form.radioButton_stop_showing.isChecked():
@@ -225,14 +223,39 @@ def update(one_dictionary_entry, i):
     else:
         pass
     y = 0
-    set_new_color = 1
+
     while y < len(one_dictionary_entry):
+
         form.label_number.setText(str(one_dictionary_entry[0]))
-        form.label_hieroglyph.setText(f"<span style='color: {new_color()}'>{str(one_dictionary_entry[1])}</span>")
-        form.label_pinin.setText(f"<span style='color: {new_color()}'>{str(one_dictionary_entry[2])}</span>")
-        form.label_translation.setText(f"<span style='color: {new_color()}'>{str(one_dictionary_entry[3])}</span>")
-        form.label_phrase.setText(f"<span style='color: {new_color()}'>{str(one_dictionary_entry[4])}</span>")
+
+        if form.checkBox_show_hieroglyph.isChecked() == True:
+            form.label_hieroglyph.setText(f"<span style='color: {new_color()}'>{str(one_dictionary_entry[1])}</span>")
+        else:
+            form.label_hieroglyph.setFont(QFont('Arial', 8))
+            form.label_hieroglyph.setText(f"<span style='color: #f00'>****</span>")
+
+        if form.checkBox_show_pinin.isChecked() == True:
+             form.label_pinin.setText(f"<span style='color: {new_color()}'>{str(one_dictionary_entry[2])}</span>")
+        else:
+            form.label_pinin.setFont(QFont('Arial', 12))
+            form.label_pinin.setText(f"<span style='color: #f00'>****</span>")
+
+        if form.checkBox_show_translation.isChecked() == True:
+            form.label_translation.setText(f"<span style='color: {new_color()}'>{str(one_dictionary_entry[3])}</span>")
+
+        else:
+            form.label_translation.setFont(QFont('Arial', 14))
+            form.label_translation.setText(f"<span style='color: #f00'>****</span>")
+
+
+        if form.checkBox_show_phrase.isChecked() == True:
+            form.label_phrase.setText(f"<span style='color: {new_color()}'>{str(one_dictionary_entry[4])}</span>")
+        else:
+            form.label_phrase.setFont(QFont('Arial', 14))
+            form.label_phrase.setText(f"<span style='color: #f00'>****</span>")
+
         form.label_HSK.setText(f"<span style='color: {new_color()}'>{str(one_dictionary_entry[5])}</span>")
+
         y += 1
 
     form.progressBar.setMaximum(len(start_hsk_show))
@@ -305,7 +328,7 @@ def checkBox_show_pinin_method(value):
         print('  Показать PININ')
 
 
-def checkBox_show_pfrase_method(value):
+def checkBox_show_phrase_method(value):
     if value == False:
         print(f'НЕ показывать ФРАЗУ!')
     else:
@@ -334,7 +357,7 @@ form.horizontalSlider_speed.valueChanged.connect(increase_speed_show)
 # Управление показом отдельных частей словарной статьи
 form.checkBox_show_hieroglyph.stateChanged.connect(checkBox_show_hieroglyph_method)
 form.checkBox_show_pinin.stateChanged.connect(checkBox_show_pinin_method)
-form.checkBox_show_pfrase.stateChanged.connect(checkBox_show_pfrase_method)
+form.checkBox_show_phrase.stateChanged.connect(checkBox_show_phrase_method)
 form.checkBox_show_translation.stateChanged.connect(checkBox_show_translation_method)
 
 # Управление точкой запуска просмотра
