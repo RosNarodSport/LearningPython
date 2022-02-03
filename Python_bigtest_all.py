@@ -278,16 +278,16 @@ def on_click_replace():  # Проверка. Удалить
 
 
 def horizontalSlider_size_Value():
-    zzz = form.horizontalSlider_size.value()
+    hieroglyph_size = form.horizontalSlider_size.value()
 
-    if zzz > 6 and zzz < 50:
-        form.label_hieroglyph.setFont(QFont('Arial', zzz))
-        form.label_for_horizontalSlider_size.setFont(QFont('Arial', zzz))
+    if hieroglyph_size > 6 and hieroglyph_size < 50:
+        form.label_hieroglyph.setFont(QFont('Arial', hieroglyph_size))
+        form.label_for_horizontalSlider_size.setFont(QFont('Arial', hieroglyph_size))
 
 
 def increase_character_size():
-    aaa = form.spinBox.value()
-    form.label_hieroglyph.setFont(QFont('Arial', aaa))
+    character_size = form.spinBox.value()
+    form.label_hieroglyph.setFont(QFont('Arial', character_size))
 
 
 # Метод управляет изменением скорости показа иероглифа. Где-то здесь ошибка, искажающая вывод словарных статей
@@ -302,7 +302,6 @@ def show_new_start_point():
     new_point_for_show = form.horizontalSlider_show_new_start_point.value()
     new_point_for_show_for_label = int((1200*new_point_for_show)/100) + 13
     form.label_check_new_start_point.setText(f'-> {new_point_for_show_for_label}')
-    print(f'Показ начат с: {new_point_for_show_for_label}, а счетчик установлен на {new_point_for_show_for_label}')
     return new_point_for_show
 
 
