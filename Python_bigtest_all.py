@@ -1,12 +1,8 @@
+import sys
 from functools import *
-
-import media_sound
 from hieroglyphs import *
-from hsk_selection_options import *
-
-from PyQt5 import QtCore, Qt, QtGui, QtMultimedia
+from PyQt5 import QtCore
 from PyQt5 import uic
-from PyQt5.QtCore import QDate
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import *
 import datetime
@@ -302,11 +298,11 @@ def increase_speed_show():
 
 
 # Метод управляет выбором места начала показа словарной статьи.
-# Связь с label СТАТУС
 def show_new_start_point():
     new_point_for_show = form.horizontalSlider_show_new_start_point.value()
-    new_point_for_show = int(new_point_for_show)
-    form.label_check_new_start_point.setText(f'-> {new_point_for_show + 1}')
+    new_point_for_show_for_label = int((1200*new_point_for_show)/100) + 13
+    form.label_check_new_start_point.setText(f'-> {new_point_for_show_for_label}')
+    print(f'Показ начат с: {new_point_for_show_for_label}, а счетчик установлен на {new_point_for_show_for_label}')
     return new_point_for_show
 
 
@@ -345,6 +341,14 @@ def checkBox_show_translation_method(value):
         print('  Показать ПЕРЕВОД')
 
 
+def close_all():
+    print('Закрыть все!')
+    sys.exit(app.exec_())
+
+# Первая попаытка дать звук на singleShot или метроном без привязки к cingleShot
+def short_sound():
+   pass
+
 form.spinBox.valueChanged.connect(increase_character_size)
 # form.dateEdit.dateTimeChanged.connect(dateEdit_use)
 
@@ -377,6 +381,9 @@ form.radioButton_blue.clicked.connect(new_color)
 form.radioButton_red.clicked.connect(new_color)
 
 # Проверка работы кнопки с выводом звука
-# form.pushButton_sound.clicked.connect(media_sound)
+form.pushButton_sound.clicked.connect(short_sound)
+
+# Закрыть окно
+form.pushButton_end.clicked.connect(close_all)
 
 app.exec_()
