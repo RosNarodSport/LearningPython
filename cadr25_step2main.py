@@ -10,7 +10,7 @@ import datetime
 # pyuic5 -x Python_bigtest_all.ui -o Python_bigtest.py - для
 # обновления кода моего окна надо выполнять регулярно
 
-From, Window = uic.loadUiType("Python_bigtest_all.ui")
+From, Window = uic.loadUiType("cadr25_step2.ui")
 
 app = QApplication([])
 window = Window()
@@ -41,127 +41,16 @@ def get_my_number_for_start_hsk():
     start_hsk_show_temporary = []
 
     if form.checkBox_show_hsk1.isChecked() == True:
-        if form.checkBox_show_hsk2.isChecked() == True:
-            if form.checkBox_show_hsk3.isChecked() == True:
-                if form.checkBox_show_hsk4.isChecked() == True:
-                    start_hsk_show = []
-                    start_hsk_show_temporary.extend(hsk1)
-                    start_hsk_show_temporary.extend(hsk2)
-                    start_hsk_show_temporary.extend(hsk3)
-                    start_hsk_show_temporary.extend(hsk4)
-
-                    start_hsk_show = start_hsk_show_temporary  # Получили и отдали список hsk 1-2-3-4
-                    label_status_text_show_group()
-                else:
-                    start_hsk_show = []
-                    label_status_text_no_group()
-            else:
-                start_hsk_show = []
-                label_status_text_no_group()
-        else:
-            start_hsk_show = []
-            label_status_text_no_group()
+        start_hsk_show = []
+        start_hsk_show_temporary.extend(hsk1)
+        start_hsk_show_temporary.extend(hsk2)
+        start_hsk_show_temporary.extend(hsk3)
+        start_hsk_show_temporary.extend(hsk4)
+        start_hsk_show = start_hsk_show_temporary  # Получили и отдали список hsk 1-2-3-4
+        label_status_text_show_group()
     else:
         start_hsk_show = []
         label_status_text_no_group()
-
-
-    # if form.checkBox_show_hsk1.isChecked() == True:
-    #     if form.checkBox_show_hsk2.isChecked() == True:
-    #         if form.checkBox_show_hsk3.isChecked() == True:
-    #             if form.checkBox_show_hsk4.isChecked() == False:
-    #                 start_hsk_show = []
-    #                 start_hsk_show_temporary.extend(hsk1)
-    #                 start_hsk_show_temporary.extend(hsk2)
-    #                 start_hsk_show_temporary.extend(hsk3)
-    #
-    #                 start_hsk_show = start_hsk_show_temporary  # Получили и отдали список hsk 1-2-3
-    #                 label_status_text_show_group()
-    #             else:
-    #                 start_hsk_show = []
-    #                 label_status_text_no_group()
-    #         else:
-    #             start_hsk_show = []
-    #             label_status_text_no_group()
-    #     else:
-    #         start_hsk_show = []
-    #         label_status_text_no_group()
-    # else:
-    #     start_hsk_show = []
-    #     label_status_text_no_group()
-    #
-    # if form.checkBox_show_hsk1.isChecked() == True:
-    #     if form.checkBox_show_hsk2.isChecked() == True:
-    #         if form.checkBox_show_hsk4.isChecked() == True:
-    #             if form.checkBox_show_hsk3.isChecked() == False:
-    #                 start_hsk_show = []
-    #                 start_hsk_show_temporary.extend(hsk1)
-    #                 start_hsk_show_temporary.extend(hsk2)
-    #                 start_hsk_show_temporary.extend(hsk4)
-    #
-    #                 start_hsk_show = start_hsk_show_temporary  # Получили и отдали список hsk 1-2-4
-    #                 label_status_text_show_group()
-    #             else:
-    #                 start_hsk_show = []
-    #                 label_status_text_no_group()
-    #         else:
-    #             start_hsk_show = []
-    #             label_status_text_no_group()
-    #     else:
-    #         start_hsk_show = []
-    #         label_status_text_no_group()
-    # else:
-    #     start_hsk_show = []
-    #     label_status_text_no_group()
-    #
-    # if form.checkBox_show_hsk1.isChecked() == True:
-    #     if form.checkBox_show_hsk3.isChecked() == True:
-    #         if form.checkBox_show_hsk4.isChecked() == True:
-    #             if form.checkBox_show_hsk2.isChecked() == False:
-    #                 start_hsk_show = []
-    #                 start_hsk_show_temporary.extend(hsk1)
-    #                 start_hsk_show_temporary.extend(hsk3)
-    #                 start_hsk_show_temporary.extend(hsk4)
-    #
-    #                 start_hsk_show = start_hsk_show_temporary  # Получили и отдали список hsk 1-3-4
-    #                 label_status_text_show_group()
-    #             else:
-    #                 start_hsk_show = []
-    #                 label_status_text_no_group()
-    #         else:
-    #             start_hsk_show = []
-    #             label_status_text_no_group()
-    #     else:
-    #         start_hsk_show = []
-    #         label_status_text_no_group()
-    # else:
-    #     start_hsk_show = []
-    #     label_status_text_no_group()
-    #
-    # if form.checkBox_show_hsk2.isChecked() == True:
-    #     if form.checkBox_show_hsk3.isChecked() == True:
-    #         if form.checkBox_show_hsk4.isChecked() == True:
-    #             if form.checkBox_show_hsk1.isChecked() == False:
-    #                 start_hsk_show = []
-    #                 start_hsk_show_temporary.extend(hsk2)
-    #                 start_hsk_show_temporary.extend(hsk3)
-    #                 start_hsk_show_temporary.extend(hsk4)
-    #
-    #                 start_hsk_show = start_hsk_show_temporary  # Получили и отдали список hsk 2-3-4
-    #                 label_status_text_show_group()
-    #             else:
-    #                 start_hsk_show = []
-    #                 label_status_text_no_group()
-    #         else:
-    #             start_hsk_show = []
-    #             label_status_text_no_group()
-    #     else:
-    #         start_hsk_show = []
-    #         label_status_text_no_group()
-    # else:
-    #     start_hsk_show = []
-    #     label_status_text_no_group()
-
 
 def show_me_hieroglyphs():
     # Тут проверка нужна, иначе повторное нажатие на кнопку СТАРТ
@@ -344,13 +233,6 @@ def close_all():
     print('Закрыть все!')
     sys.exit(app.exec_())
 
-# Первая попаытка дать звук на singleShot или метроном без привязки к cingleShot
-def short_sound():
-   pass
-
-form.spinBox.valueChanged.connect(increase_character_size)
-# form.dateEdit.dateTimeChanged.connect(dateEdit_use)
-
 # Запуск показа статей
 form.pushButton_start_all.clicked.connect(show_me_hieroglyphs)
 
@@ -369,18 +251,11 @@ form.checkBox_show_translation.stateChanged.connect(checkBox_show_translation_me
 # Управление точкой запуска просмотра
 form.horizontalSlider_show_new_start_point.valueChanged.connect(show_new_start_point)
 
-# Управление паузой и снятием с паузы
-form.radioButton_start_showing.clicked.connect(start_showing)
-form.radioButton_stop_showing.clicked.connect(stop_showing)
-
 # Управление цветом показа словарных статей. Задача: Вставить в показ
 form.radioButton_black.clicked.connect(new_color)
 form.radioButton_green.clicked.connect(new_color)
 form.radioButton_blue.clicked.connect(new_color)
 form.radioButton_red.clicked.connect(new_color)
-
-# Проверка работы кнопки с выводом звука
-form.pushButton_sound.clicked.connect(short_sound)
 
 # Закрыть окно
 form.pushButton_end.clicked.connect(close_all)
